@@ -1,0 +1,22 @@
+extends ../layout.pug
+
+block metadata
+  title Gastos
+  meta(name='description', content='Nuevo gasto')
+
+block content
+  h1 Complete los datos
+  form(action="/usuario/nuevo", method="post", novalidate) 
+    label(for="firstName") firstName
+      input(type="text", name="firstName", id="firstName", min="0", required)
+    br
+    label(for="lastName") lastName
+      input(type="text", name="lastName", id="lastName", required)
+    br
+    label(for="email") email
+      input(type="text", name="email", id="email", min="0", required)
+    br
+    label(for="password") password
+      input(type="password", name="password", id="password", required)
+    br
+    button(type="submit") Enviar

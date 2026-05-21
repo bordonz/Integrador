@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import { connectDatabase } from './model/index.js';
+import usuarioRouter from './routes/usuario.js'
+import { crearNuevoUsuario } from './controller/usuario.js';
 
 // CONSTANTES
 const PORT = process.env.PORT;
@@ -17,7 +19,13 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 // RUTAS
+app.use('/usuario', usuarioRouter);
 
+
+/* app.get('/nuevo', (req, res) => {
+  res.render('usuario/nuevo');
+}) */
+/* app.post('/nuevo', usuarioRouter); */
 
 // CONEXION A BD
 connectDatabase()

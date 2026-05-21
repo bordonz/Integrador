@@ -1,7 +1,15 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/config.js";
 
-export class Usuario extends Model {}
+export class Usuario extends Model {
+    static async crearUsuario(atributos) {
+        return await Usuario.create(atributos);
+    }
+
+    static async getUsuario() {
+        
+    }
+}
 
 Usuario.init(
     {
