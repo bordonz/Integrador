@@ -61,3 +61,7 @@ export async function crearNuevoUsuario(req, res) {
         console.log(err, 'Error al crear al usuario')
     }
 };
+
+export async function seguirUsuario(params) {
+    
+}

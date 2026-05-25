@@ -5,10 +5,15 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/style.css')
     block metadata
-
   body
-
+    nav
+      ul 
+        li 
+          a(href='/') Home
+        li 
+          a(href='/gastos') Gastos
+        li 
+          a(href='/categorias') Categorias 
     main
-
       div(style="padding: 20px")
-        block content
+      block content

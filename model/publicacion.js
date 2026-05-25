@@ -1,7 +1,11 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/config.js";
 
-export class Publicacion extends Model {}
+export class Publicacion extends Model {
+    static async crearPublicacion(atributos) {
+        return await Publicacion.create(atributos);
+    }
+}
 
 Publicacion.init(
     {

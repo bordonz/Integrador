@@ -1,8 +1,12 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/config.js";
 
-export class Imagen extends Model {}
-
+export class Imagen extends Model {
+    static async crearImagen(atributos) {
+        return await Imagen.create(atributos);
+    }
+}
+    
 Imagen.init(
     {
         //Model attributes
@@ -10,6 +14,18 @@ Imagen.init(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
+        },
+        nombre: {
+            type: DataTypes.STRING,
+            allowNull: false, // nombre del archivo
+        },
+        contenido: {
+            type: DataTypes.BLOB("long"), // binario de la imagen
+            allowNull: false,
+        },
+        metadata: {
+            type: DataTypes.STRING, // ej: "image/png", "image/jpeg"
+            allowNull: false,
         },
     },
     {

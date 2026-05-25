@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import { connectDatabase } from './model/index.js';
-import usuarioRouter from './routes/usuario.js'
+import usuarioRouter from './routes/usuario.js';
+import publicacionRouter from './routes/publicacion.js';
 import { crearNuevoUsuario } from './controller/usuario.js';
 
 // CONSTANTES
@@ -11,8 +12,8 @@ const app = express();
 
 // MIDDLEWARES
 app.use(express.static('public'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ limit: '20mb', extended: true }));
 
 // MOTOR DE PLANTILLAS
 app.set('view engine', 'pug');
@@ -21,11 +22,11 @@ app.set('views', './views');
 // RUTAS
 app.use('/usuario', usuarioRouter);
 
+app.use('/publicacion', publicacionRouter);
 
-/* app.get('/nuevo', (req, res) => {
-  res.render('usuario/nuevo');
-}) */
-/* app.post('/nuevo', usuarioRouter); */
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 // CONEXION A BD
 connectDatabase()

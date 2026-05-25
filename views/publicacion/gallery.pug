@@ -1,0 +1,22 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/gallery.css")
+    title Galería
+  body
+    header
+      h1 Galería de Publicaciones
+
+    main.gallery-container
+      if imagenes.length
+        each imagen in imagenes
+          div.gallery-item
+            img(src=imagen.src, alt=imagen.name)
+            div.gallery-info
+              p.gallery-name #{imagen.name}
+              span.gallery-meta Imagen subida
+      else
+        p No hay imágenes disponibles.
+  

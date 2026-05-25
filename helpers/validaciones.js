@@ -31,3 +31,6 @@ export function validarUsuario(usuario) {
     success: true
   }
 }
+
+
+//ESQUEMA DE VALIDACION DE publicacion
