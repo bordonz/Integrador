@@ -2,7 +2,7 @@ import sequelize from "../db/config.js";
 import { Usuario } from "./Usuario.js";
 import { Etiqueta } from "./Etiqueta.js";
 import { Publicacion } from "./Publicacion.js";
-import { Comentario } from "./comentario.js";
+import { Comentario } from "./Comentario.js";
 import { Imagen } from "./Imagen.js";
 import { Valoracion } from "./Valoracion.js";
 import { Denuncia } from "./Denuncia.js";

@@ -1,60 +1,72 @@
 import { Imagen } from '../model/Imagen.js';
 import { Publicacion } from '../model/Publicacion.js';
+import { Comentario } from '../model/Comentario.js';
+import { Usuario } from '../model/Usuario.js';
 
 export async function mostrarPublicacion(req, res) {
-/*     try {
-    const publicaciones = await Publicacion.findAll({
-      include: [Imagen] // Sequelize trae las imágenes asociadas
-    });
-
-    const arregloPublicaciones = publicaciones.map(pub => {
-      const imagenes = pub.Imagens.map(img => {
-        const imgsBase64 = img.contenido.toString('base64');
-        const sufix = `${img.metadata};base64,`;
-        return {
-          name: img.nombre,
-          src: `data:${sufix}${imgsBase64}`
-        };
-      });
-
-      return {
-        titulo: pub.titulo,
-        descripcion: pub.descripcion,
-        imagenes
-      };
-    });
-
-    res.render('publicacion/gallery', {
-      publicaciones: arregloPublicaciones || []
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al cargar la galería');
-  }
-} */
-
     try {
-        const imagenes = await Imagen.findAll();
+        const publicaciones = await Publicacion.findAll({
+            include: [{
+                model: Imagen,
+                include: [{
+                    model: Comentario,
+                    include: [ Usuario ]
+                    }]
+                }]
+        });
 
-        const arregloImagenes = [];
-        for(const imagen of imagenes) {
-            if (imagen && imagen.contenido && imagen.nombre) { // Validación adicional
-                const imgsBase64 = imagen.contenido.toString('base64');
-                const sufix = `data:image/${imagen.metadata};base64,`
-                arregloImagenes.push({
-                    name: imagen.nombre,
-                    src: sufix + imgsBase64
-                })
-            } else {
-                console.warn('Imagen inválida encontrada:', imagen);
+        const publicacionesProcesadas = [];
+        
+        for(const pub of publicaciones) {
+            const imagenesProcesadas = [];
+            
+            console.log(`Publicación ${pub.id_publicacion}: ${pub.titulo}`);
+            console.log(`  Número de imágenes: ${pub.Imagens?.length || 0}`);
+            
+            const imagenes = pub.Imagens || [];
+            
+            for(const imagen of imagenes) {
+                if (imagen && imagen.contenido && imagen.nombre) {
+                    const imgsBase64 = imagen.contenido.toString('base64');
+                    const sufix = `data:image/${imagen.metadata};base64,`;
+                    
+                    //Comentarios asociados a la imagen
+                    const comentarios = (imagen.Comentarios || []).map(c => ({
+                        id: c.id_comentario,
+                        texto: c.descripcion,
+                        autor: c.Usuario ? `${c.Usuario.firstName}` : 'Usuario',
+                        fecha: c.createdAt ? c.createdAt.toLocaleString() : ''
+                    }));
+
+                    imagenesProcesadas.push({
+                        id: imagen.id_imagen,
+                        name: imagen.nombre,
+                        src: sufix + imgsBase64,
+                        descripcion: imagen.descripcion || '',
+                        comentarios: comentarios,
+                    });
+                    console.log(`    Imagen procesada: ${imagen.nombre}`);
+                } else {
+                    console.log(`    Imagen inválida:`, imagen);
+                }
             }
+            
+            publicacionesProcesadas.push({
+                id: pub.id_publicacion,
+                titulo: pub.titulo,
+                descripcion: pub.descripcion,
+                imagenes: imagenesProcesadas
+            });
         }
-        console.log('Imagenes procesadas: ', arregloImagenes.length);
-        console.log(arregloImagenes);
+        
+        console.log('Total publicaciones procesadas:', publicacionesProcesadas.length);
+        console.log('Primera publicación:', JSON.stringify(publicacionesProcesadas[0], null, 2));
+        
         res.render('publicacion/gallery', {
-            imagenes : arregloImagenes || []
-        })
-    }catch(error) {
+            publicaciones: publicacionesProcesadas
+        });
+        
+    } catch(error) {
         console.error(error);
         res.status(500).send('Error al cargar la galería');
     }
@@ -87,6 +99,23 @@ export async function subirPublicacion(req, res) {
     }
 
     res.redirect('publicacion/gallery')
-};
+}
+
+export async function subirComentario(req, res) {
+
+    try {
+        const com = await Comentario.subirComentario({
+            descripcion: req.body.descripcion,
+            estado: "Sin denuncias",
+            id_imagen: req.params.idImagen,
+            id_usuario: 1
+        });
+
+        res.redirect('/publicacion/gallery');
+    }catch(error) {
+        console.error(error);
+        res.status(500).send('Error al subir el comentario');
+    }
+}
 
 

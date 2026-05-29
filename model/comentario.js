@@ -1,7 +1,11 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/config.js";
 
-export class Comentario extends Model {}
+export class Comentario extends Model {
+    static async subirComentario(atributo) {
+        return await Comentario.create(atributo);
+    }
+}
 
 Comentario.init(
     {
@@ -17,6 +21,20 @@ Comentario.init(
         },
         estado: {
             type: DataTypes.STRING(50),
+        },
+        id_imagen: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "imagen", // 🔎 nombre exacto de la tabla
+                key: "id_imagen",
+            },
+        },
+        id_usuario: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: "usuario",
+                key: "id_usuario",
+            }
         },
     },
     {

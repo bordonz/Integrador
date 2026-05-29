@@ -1,54 +1,245 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #111;
-  color: #fff;
-  margin: 0;
+/* Reset y base */
+/* NOTA: HACER UN BUTTON GLOBAL */
+* {
+  box-sizing: border-box;
   padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #071324;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 header {
   text-align: center;
-  padding: 20px;
+  padding: 40px 0;
+  color: white;
 }
 
+header h1 {
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Contenedor de la galería */
 .gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
   padding: 20px;
 }
 
 .gallery-item {
-  background: #222;
-  border-radius: 8px;
+  background: white;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  transition: transform 0.2s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
 }
 
 .gallery-item:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
 }
 
-.gallery-item img {
+.carrusel-container {
+  position: relative;
   width: 100%;
-  height: auto;
+  background: transparent; 
+  /* background: #000; */
+  overflow: hidden;
+}
+
+.carrusel-imagenes {
+  width: 100%;
+}
+
+.carrusel-slide {
+  display: none;              /* ocultar por defecto */
+  flex-direction: column;     /* imagen arriba, info abajo */
+  background: #fff;
+}
+
+.carrusel-slide.active {
+  display: flex;              /* mostrar solo el activo */
+}
+
+.carrusel-slide img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
   display: block;
 }
 
-.gallery-info {
-  padding: 10px;
-  text-align: center;
+.carrusel-slide .gallery-info {
+  padding: 15px;
+  background: #fff;
+  color: #333;
+  text-align: left;
 }
 
-.gallery-name {
+
+.gallery-title {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 10px;
   font-weight: bold;
-  margin: 5px 0;
 }
 
+.gallery-description {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+/* VALORACION */
+.valoracion-wrapper button {
+  padding: 5px 10px;
+/*   margin-left: 20px; */
+  background: #667eea;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.valoracion-wrapper {
+  margin-top: 10px;
+}
+
+.valoracion-wrapper label {
+  font-weight: bold;
+  margin-right: 8px;
+  color: #333;
+}
+
+.valoracion-wrapper select {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.valoracion-wrapper select:hover {
+  border-color: #007bff;
+}
+
+.valoracion-wrapper select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+}
+
+
+/* Formulario de comentarios */
+.comentario-form {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.comentario-form input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #f9f9f9;
+  color: #333;
+}
+
+.comentario-form button {
+  padding: 5px 10px;
+  background: #667eea;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comentario-form button:hover {
+  background: #4455cc;
+}
+
+.comentarios-wrapper {
+  max-height: 60px;   /* altura máxima visible */
+  overflow-y: scroll;    /* agrega scroll vertical si se excede */
+  padding: 5px;
+  border: 1px solid #ddd; /* opcional, para delimitar */
+  border-radius: 4px;
+  background-color: #fafafa; /* opcional */
+}
+
+
+/* Meta de imágenes */
 .gallery-meta {
+  display: inline-block;
+  background: #667eea;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
   font-size: 0.8em;
-  color: #aaa;
+  margin: 10px;
 }
 
+/* Botones carrusel */
+.carrusel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 10;
+  transition: background 0.3s ease;
+  border-radius: 5px;
+}
 
+.carrusel-btn:hover {
+  background: rgba(0,0,0,0.9);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* Sin imágenes */
+.sin-imagenes {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gallery-container {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+  
+  .carrusel-slide img {
+    height: 200px;
+  }
+  
+  .carrusel-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+}

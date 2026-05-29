@@ -42,3 +42,6 @@ connectDatabase()
   .catch((err) => {
     console.error('[+] Error sincronizando con bd:', err)
   })
+
+  //NOTA:
+  //REVISAR DB, TABLA COMENTARIO NO TIENE KEY DE USUARIO

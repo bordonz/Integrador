@@ -1,22 +1,94 @@
-doctype html
-html(lang="es")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet", href="/gallery.css")
-    title Galería
-  body
-    header
-      h1 Galería de Publicaciones
-
+extends ../layout.pug
+block metadata
+  title Galeria
+  link(rel="stylesheet", href="/gallery.css")
+block content
     main.gallery-container
-      if imagenes.length
-        each imagen in imagenes
-          div.gallery-item
-            img(src=imagen.src, alt=imagen.name)
-            div.gallery-info
-              p.gallery-name #{imagen.name}
-              span.gallery-meta Imagen subida
-      else
-        p No hay imágenes disponibles.
-  
+      if publicaciones && publicaciones.length > 0
+        each publicacion, idx in publicaciones
+          div.gallery-item(data-id=publicacion.id)
+            div.carrusel-container
+              if publicacion.imagenes && publicacion.imagenes.length > 0
+                span.gallery-meta #{publicacion.imagenes.length} imagen(es)
+                button.carrusel-btn.prev(data-idx=idx) ❮
+                div.carrusel-imagenes
+                  each imagen, imgIdx in publicacion.imagenes
+                    div.carrusel-slide(class=(imgIdx === 0 ? 'active' : ''), data-img-id=imagen.id)
+                      img(src=imagen.src, alt=imagen.name)
+                      div.gallery-info
+                        h2.gallery-title #{publicacion.titulo}
+                        p.gallery-description #{publicacion.descripcion}
+
+                        //- Bloque de valoración
+                        div.valoracion-wrapper
+                          form.valoracion-form(action=`/publicacion/crearValoracion/${imagen.id}`, method="POST")
+                            select(name=`valoracion_${imagen.id}`, id=`valoracion_${imagen.id}`)
+                              option(value="1") 1
+                              option(value="2") 2
+                              option(value="3") 3
+                              option(value="4") 4
+                              option(value="5") 5
+                            button(type="submit") Valorar
+                        form.comentario-form(data-publicacion-idx=idx, action=`/publicacion/crearComentario/${imagen.id}`, method="POST")
+                          input(type="text", name="descripcion", placeholder="Escribir comentario")
+                          button(type="submit") Comentar
+
+                        //- Comentarios de esta imagen
+                        div.comentarios-wrapper(data-img-id=imagen.id)
+                          if imagen.comentarios && imagen.comentarios.length > 0
+                            h3 Comentarios:
+                            ul.comentarios
+                              each comentario in imagen.comentarios 
+                                li
+                                  strong #{comentario.autor}: 
+                                  | #{comentario.texto}
+                          else
+                            p.sin-comentarios No hay comentarios aún.
+                button.carrusel-btn.next(data-idx=idx) ❯
+              else
+                div.sin-imagenes
+                  p 📷 No hay imágenes disponibles
+
+
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar carruseles para cada publicación
+        const carruseles = document.querySelectorAll('.gallery-item');
+        
+        carruseles.forEach((carrusel, idx) => {
+          const slides = carrusel.querySelectorAll('.carrusel-slide');
+          const prevBtn = carrusel.querySelector('.prev');
+          const nextBtn = carrusel.querySelector('.next');
+          
+          if (slides.length === 0) return;
+          
+          let currentIndex = 0;
+          
+          function showSlide(index) {
+            slides.forEach((slide, i) => {
+              slide.classList.remove('active');
+              if (i === index) {
+                slide.classList.add('active');
+              }
+            });
+          }
+          
+          function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+          }
+          
+          function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+          }
+          
+          if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+          if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+          
+          // Opcional: Auto-play cada 5 segundos
+          // setInterval(nextSlide, 5000);
+        });
+        
+        console.log('Carruseles inicializados:', document.querySelectorAll('.gallery-item').length);
+      });
