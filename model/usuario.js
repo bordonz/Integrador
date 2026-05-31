@@ -1,11 +1,15 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/config.js";
+import bcrypt from 'bcrypt';
 
 export class Usuario extends Model {
     static async crearUsuario(atributos) {
         return await Usuario.create(atributos);
     }
 
+    static async validarPassword(password) {
+        return bcrypt.compare(password, this.password)
+    }
     static async getUsuario() {
         
     }
@@ -32,7 +36,7 @@ Usuario.init(
             unique: true,
         },
         password: {
-            type: DataTypes.STRING(40),
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },
@@ -44,5 +48,14 @@ Usuario.init(
         createdAt: true,
         deletedAt: true,
         updatedAt: false,
+        hooks: {
+            beforeSave: async (usuario) => {
+                if(!usuario.password) return;
+                if(!usuario.changed('password')) return;
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(usuario.password, salt)
+                usuario.password = hashedPassword;
+            }
+        }
     },
 );

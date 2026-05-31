@@ -1,4 +1,3 @@
-/* Reset y base */
 /* NOTA: HACER UN BUTTON GLOBAL */
 * {
   box-sizing: border-box;
@@ -10,7 +9,6 @@
 body {
   background: #071324;
   min-height: 100vh;
-  padding: 20px;
 }
 
 header {
@@ -26,7 +24,7 @@ header h1 {
 
 /* Contenedor de la galería */
 .gallery-container {
-  max-width: 1200px;
+/*   max-width: 1200px; */
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -46,6 +44,7 @@ header h1 {
   transform: translateY(-5px);
 }
 
+/* Contenedor del carrusel */
 .carrusel-container {
   position: relative;
   width: 100%;
@@ -70,7 +69,7 @@ header h1 {
 
 .carrusel-slide img {
   width: 100%;
-  height: 400px;
+  height: 300px;
   object-fit: cover;
   display: block;
 }
@@ -81,6 +80,7 @@ header h1 {
   color: #333;
   text-align: left;
 }
+/* Contenedor del carrusel */
 
 
 .gallery-title {
@@ -97,45 +97,34 @@ header h1 {
   font-size: 0.9em;
 }
 /* VALORACION */
-.valoracion-wrapper button {
-  padding: 5px 10px;
-/*   margin-left: 20px; */
-  background: #667eea;
-  border: none;
-  border-radius: 3px;
-  color: #fff;
-  cursor: pointer;
+.valoracion-form {
+  display: flex;
+  flex-direction: row;   /* explícito */
+  align-items: center;
+  gap: 8px;
 }
 
-.valoracion-wrapper {
-  margin-top: 10px;
-}
 
-.valoracion-wrapper label {
-  font-weight: bold;
-  margin-right: 8px;
-  color: #333;
-}
-
-.valoracion-wrapper select {
+.valoracion-form select {
   padding: 6px 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  font-size: 14px;
-  background-color: #fff;
+}
+
+.valoracion-form button {
+  padding: 6px 12px;
+  background-color: #071324;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  transition: border-color 0.2s ease;
 }
 
-.valoracion-wrapper select:hover {
-  border-color: #007bff;
+.valoracion-form button:hover {
+  background-color: #0056b3;
 }
+/* VALORACION */
 
-.valoracion-wrapper select:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0,123,255,0.4);
-}
 
 
 /* Formulario de comentarios */
@@ -156,7 +145,7 @@ header h1 {
 
 .comentario-form button {
   padding: 5px 10px;
-  background: #667eea;
+  background: #071324;
   border: none;
   border-radius: 3px;
   color: #fff;
@@ -175,6 +164,7 @@ header h1 {
   border-radius: 4px;
   background-color: #fafafa; /* opcional */
 }
+/* Formulario de comentarios */
 
 
 /* Meta de imágenes */
@@ -191,9 +181,9 @@ header h1 {
 /* Botones carrusel */
 .carrusel-btn {
   position: absolute;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
+  background: #071324;
   color: white;
   border: none;
   padding: 15px 20px;

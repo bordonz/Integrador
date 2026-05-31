@@ -2,6 +2,9 @@ import { Imagen } from '../model/Imagen.js';
 import { Publicacion } from '../model/Publicacion.js';
 import { Comentario } from '../model/Comentario.js';
 import { Usuario } from '../model/Usuario.js';
+import { Valoracion } from '../model/Valoracion.js';
+import { Etiqueta } from '../model/Etiqueta.js';
+import sequelize  from '../db/config.js';
 
 export async function mostrarPublicacion(req, res) {
     try {
@@ -11,10 +14,33 @@ export async function mostrarPublicacion(req, res) {
                 include: [{
                     model: Comentario,
                     include: [ Usuario ]
-                    }]
-                }]
+                    }
+                ]
+                },
+            {
+                model: Etiqueta,
+                through: { attributes: [] }
+            }]
         });
 
+        // Calcular promedio para cada imagen
+        for (const pub of publicaciones) {
+            for (const img of pub.Imagens) {
+                const promedio = await Valoracion.findAll({
+                attributes: [
+                    [sequelize.fn('AVG', sequelize.col('puntaje')), 'promedio']
+                ],
+                where: { id_imagen: img.id_imagen },
+                raw: true
+                });
+
+                img.dataValues.promedio = promedio[0].promedio 
+                ? parseInt(promedio[0].promedio) 
+                : null;
+        console.log('Promedio crudo:', promedio);
+            }
+        
+        }
         const publicacionesProcesadas = [];
         
         for(const pub of publicaciones) {
@@ -44,8 +70,8 @@ export async function mostrarPublicacion(req, res) {
                         src: sufix + imgsBase64,
                         descripcion: imagen.descripcion || '',
                         comentarios: comentarios,
+                        promedio: imagen.dataValues.promedio || null
                     });
-                    console.log(`    Imagen procesada: ${imagen.nombre}`);
                 } else {
                     console.log(`    Imagen inválida:`, imagen);
                 }
@@ -55,13 +81,13 @@ export async function mostrarPublicacion(req, res) {
                 id: pub.id_publicacion,
                 titulo: pub.titulo,
                 descripcion: pub.descripcion,
-                imagenes: imagenesProcesadas
+                imagenes: imagenesProcesadas,
+                etiquetas: (pub.Etiqueta || []).map(e => e.nombre)
             });
         }
         
-        console.log('Total publicaciones procesadas:', publicacionesProcesadas.length);
         console.log('Primera publicación:', JSON.stringify(publicacionesProcesadas[0], null, 2));
-        
+
         res.render('publicacion/gallery', {
             publicaciones: publicacionesProcesadas
         });
@@ -72,38 +98,57 @@ export async function mostrarPublicacion(req, res) {
     }
 }
 
+//NOTA: Lo que generaba que no se subieran las imagenes es que se
+//rompia silenciosamente en las etiquetas
 export async function subirPublicacion(req, res) {
-    //Crea y guarda la publicacion
-    const pub = await Publicacion.crearPublicacion({
-        estado: "Sin denuncias",
-        titulo: req.body.titulo,
-        descripcion: req.body.descripcion,
-        id_usuario: 1
-    });
+    try {
+        //Crea y guarda la publicacion
+        const pub = await Publicacion.crearPublicacion({
+            estado: "Sin denuncias",
+            titulo: req.body.titulo,
+            descripcion: req.body.descripcion,
+            id_usuario: 1
+        });
 
-    const imagenes = req.body.imgs;
+        //Etiquetas
+        /* if(etiquetas && etiquetas.length > 0) {
+            for(const nombre of etiquetas) {
+                if(nombre.trim() !== "") {
+                    const [etiqueta] = await Etiqueta.findOrCreate({ where: { nombre } });
+                    await pub.addEtiqueta(etiqueta);
+                }
+            }
+        } */
 
-    for(const img of imagenes) {
-        const textBase64 = img.src;
+        const imagenes = req.body.imgs;
 
-        const arregloBase64 = textBase64.split(',');
-        const imgBuffer = Buffer.from(arregloBase64[1], 'base64')
+        for(const img of imagenes) {
+            const textBase64 = img.src;
 
-        const imagenCreada = {
-            contenido: imgBuffer,
-            nombre: img.name,
-            id_publicacion: pub.id_publicacion,
-            metadata: arregloBase64[0]
-        };
-        await Imagen.crearImagen(imagenCreada);
+            const arregloBase64 = textBase64.split(',');
+            const imgBuffer = Buffer.from(arregloBase64[1], 'base64')
+
+            const imagenCreada = {
+                contenido: imgBuffer,
+                nombre: img.name,
+                id_publicacion: pub.id_publicacion,
+                metadata: arregloBase64[0]
+            };
+            const resultado = await Imagen.crearImagen(imagenCreada);
+            console.log('Imagen guardada con ID:', resultado?.id_imagen);
+        }
+
+        res.redirect('publicacion/gallery')
+    } catch (error) {
+        res.status(500).send('Error al crear la publicación');
     }
-
-    res.redirect('publicacion/gallery')
 }
+
 
 export async function subirComentario(req, res) {
 
     try {
+    //NOTA: const sin uso
         const com = await Comentario.subirComentario({
             descripcion: req.body.descripcion,
             estado: "Sin denuncias",

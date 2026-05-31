@@ -3,6 +3,8 @@ import express from 'express';
 import { connectDatabase } from './model/index.js';
 import usuarioRouter from './routes/usuario.js';
 import publicacionRouter from './routes/publicacion.js';
+import valoracionRouter from './routes/valoracion.js';
+import authRouter from './routes/auth.js';
 import { crearNuevoUsuario } from './controller/usuario.js';
 
 // CONSTANTES
@@ -24,6 +26,10 @@ app.use('/usuario', usuarioRouter);
 
 app.use('/publicacion', publicacionRouter);
 
+app.use('/valoracion', valoracionRouter);
+
+app.use('/auth', authRouter);
+
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -42,6 +48,3 @@ connectDatabase()
   .catch((err) => {
     console.error('[+] Error sincronizando con bd:', err)
   })
-
-  //NOTA:
-  //REVISAR DB, TABLA COMENTARIO NO TIENE KEY DE USUARIO

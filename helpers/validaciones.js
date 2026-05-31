@@ -11,9 +11,9 @@ const Usuario = z.object({
     .max(50, "El lastName debe tener como máximo 50 caracteres")
     .min(5, "El lastName debe tener como minimo 5 caracteres"),
     email: z.email('El email esta mal definido'),
-    password: z.string('El password debe ser un texto')
+/*     password: z.string('El password debe ser un texto')
     .max(50, "El password debe tener como máximo 40 caracteres")
-    .min(5, "El password debe tener como minimo 5 caracteres"),
+    .min(5, "El password debe tener como minimo 5 caracteres"), */
 });
 
 // FUNCIONES DE VALIDACION - exportadas para ser usadas en rutas, controladores, etc

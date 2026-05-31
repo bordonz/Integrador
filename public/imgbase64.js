@@ -11,11 +11,13 @@ const arregloImgs = [];
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
+
   const bodyToSend = {
     imgs: arregloImgs,
     fecha: new Date().toLocaleTimeString(),
     titulo: document.getElementById('titulo').value,
-    descripcion: document.getElementById('descripcion').value
+    descripcion: document.getElementById('descripcion').value,
+    // etiquetas: Array.from(document.querySelectorAll('input[name="etiquetas[]"]')).map(e => e.value)
   }
   fetch(form.action, {
     method: 'post',
@@ -84,3 +86,22 @@ function validarFile(file) {
 
   return true;
 }
+
+// --- Manejo de etiquetas dinámicas ---
+document.addEventListener('DOMContentLoaded', () => {
+  const addBtn = document.getElementById('add-etiqueta');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      const container = document.getElementById('etiquetas-container');
+      if (container) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'etiquetas[]';
+        input.placeholder = 'Nueva etiqueta';
+        input.classList.add('form-control'); // opcional, para estilo
+        container.appendChild(input);
+      }
+    });
+  }
+});
+
