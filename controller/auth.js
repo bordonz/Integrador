@@ -21,12 +21,12 @@ export async function login(req, res) {
   }
 
   try {
-    const user = await Usuario.findOne({
+    const usuario = await Usuario.findOne({
       where: {
         email: mail
       }
     });
-    if(!user){
+    if(!usuario){
       res.status(400).render('auth/login', {
         alert: {
           status: "error",
@@ -42,15 +42,15 @@ export async function login(req, res) {
       res.status(400).render('auth/login', {
         alert: {
           status: "error",
-          text: "Usuario o contrasena incorrecta."
+          text: "Usuario o contraseña incorrecta."
         },
         formValues: req.body
       })
       return;
     }
 
-    req.session.user = {
-      id: user.id,
+    req.session.usuario = {
+      id: usuario.id_usuario,
     };
   } catch (error) {
     console.log('[!] Error en login: ', error);
@@ -65,7 +65,7 @@ export async function login(req, res) {
   }
 
   // si esta todo ok => luego de redirecciona al home
-  res.redirect('publicacion/gallery')
+  res.redirect('/publicacion/gallery')
 }
 
 export async function signupForm(req, res) {
@@ -79,7 +79,7 @@ export async function signup(req, res) {
   const lastname = apellido.trim();
   const mail = email.trim();
   const pass = password.trim();
-  const confirmPass = password.trim();
+  const confirmPass = confirmPassword.trim();
 
   if(!name || !lastname || !mail || !pass || !confirmPass){
     res.status(400).render('auth/signup', {
@@ -95,14 +95,14 @@ export async function signup(req, res) {
     res.status(400).render('auth/signup', {
       alert: {
         status: "error",
-        text: "Las contrasenas no coinciden"
+        text: "Las contraseñas no coinciden"
       },
       formValues: req.body
     })
   }
 
   try {
-    const user = await Usuario.create({
+    const usuario = await Usuario.create({
       firstName: name,
       lastName: lastname,
       email: mail,
