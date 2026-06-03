@@ -1,5 +1,11 @@
 import { Usuario } from "../model/Usuario.js";
 import { validarUsuario } from "../helpers/validaciones.js"
+import { Publicacion } from "../model/Publicacion.js"; 
+import { Imagen } from '../model/Imagen.js';
+import { Comentario } from '../model/Comentario.js';
+import { Valoracion } from '../model/Valoracion.js';
+import { Etiqueta } from '../model/Etiqueta.js';
+import sequelize from '../db/config.js';
 
 export async function crearNuevoUsuario(req, res) {
     try {
@@ -64,4 +70,87 @@ export async function crearNuevoUsuario(req, res) {
 
 export async function seguirUsuario(params) {
     
+}
+
+export async function cargarPerfil(req, res) {
+  const userId = parseInt(req.params.id, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).send('ID de usuario inválido');
+  }
+
+  try {
+    const usuario = await Usuario.findByPk(userId, {
+      attributes: ['id_usuario', 'firstName', 'lastName', 'email'],
+      include: [{
+        model: Publicacion,
+        attributes: ['id_publicacion', 'titulo', 'descripcion', 'estado'],
+        include: [
+          {
+            model: Imagen,
+            include: [{
+              model: Comentario,
+              include: [Usuario]
+            }]
+          },
+          {
+            model: Etiqueta,
+            through: { attributes: [] }
+          }
+        ]
+      }]
+    });
+
+    if (!usuario) {
+      return res.status(404).render('error', { message: 'Usuario no encontrado' });
+    }
+
+    // Procesar publicaciones igual que en gallery
+    const publicacionesProcesadas = [];
+
+    for (const pub of usuario.Publicacions) {
+      const imagenesProcesadas = [];
+
+      for (const img of pub.Imagens || []) {
+        // calcular promedio de valoraciones
+        const promedio = await Valoracion.findAll({
+          attributes: [[sequelize.fn('AVG', sequelize.col('puntaje')), 'promedio']],
+          where: { id_imagen: img.id_imagen },
+          raw: true
+        });
+
+        const comentarios = (img.Comentarios || []).map(c => ({
+          id: c.id_comentario,
+          texto: c.descripcion,
+          autor: c.Usuario ? `${c.Usuario.firstName}` : 'Usuario',
+          fecha: c.createdAt ? c.createdAt.toLocaleString() : ''
+        }));
+
+        imagenesProcesadas.push({
+          id: img.id_imagen,
+          name: img.nombre,
+          src: `data:image/${img.metadata};base64,${img.contenido.toString('base64')}`,
+          descripcion: img.descripcion || '',
+          comentarios,
+          promedio: promedio[0].promedio ? parseInt(promedio[0].promedio) : null
+        });
+      }
+
+      publicacionesProcesadas.push({
+        id: pub.id_publicacion,
+        titulo: pub.titulo,
+        descripcion: pub.descripcion,
+        imagenes: imagenesProcesadas,
+        etiquetas: (pub.Etiquetas || []).map(e => e.nombre),
+        id_usuario: usuario.id_usuario,
+        autor: `${usuario.firstName} ${usuario.lastName}`
+      });
+    }
+
+    res.render('usuario/perfil', {usuario, publicaciones: publicacionesProcesadas});
+
+  } catch (error) {
+    console.error('[!] Error cargando perfil:', error);
+    res.status(500).render('error', { message: 'Error interno' });
+  }
 }

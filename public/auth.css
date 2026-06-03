@@ -3,21 +3,20 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: Arial, sans-serif;
   background-color: #071324;
+  margin: 0; /* evita que el nav se desplace */
+}
+
+.auth-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: calc(100vh - 60px); /* alto total menos el nav */
+  padding-top: 60px; /* espacio para que no se monte sobre el nav */
 }
 
-.form-wrapper h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #071324;
-}
 
 .container {
   background-color: #fff;
@@ -26,6 +25,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: min(400px, 90%);
 }
+
 
 .form-group {
   display: flex;

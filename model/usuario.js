@@ -7,7 +7,7 @@ export class Usuario extends Model {
         return await Usuario.create(atributos);
     }
 
-    static async validarPassword(password) {
+    async validarPassword(password) {
         return bcrypt.compare(password, this.password)
     }
     static async getUsuario() {

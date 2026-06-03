@@ -23,8 +23,9 @@ html(lang="en")
       input(type="hidden" name="id_usuario" value="1")
 
       div.form-group
-        label Etiquetas
+        label(for="etiquetas") Etiquetas
         div#etiquetas-container
+        input(type="text" name="etiquetas[]" id="etiquetas" placeholder="Etiqueta 1")
         button(type="button" id="add-etiqueta") + Agregar etiqueta
 
       input(type="submit" value="Enviar" class="btn-submit")

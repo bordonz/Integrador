@@ -1,4 +1,4 @@
-import { Usuario } from "../model/Usuario";
+import { Usuario } from "../model/Usuario.js";
 
 export async function authMiddleware(req, res, next) {
   const sessionUsuario = req.session.usuario; // usuario de la sesion solo contiene id

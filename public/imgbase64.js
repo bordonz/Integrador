@@ -87,7 +87,7 @@ function validarFile(file) {
   return true;
 }
 
-// --- Manejo de etiquetas dinámicas ---
+//- Manejo de etiquetas dinámicas 
 document.addEventListener('DOMContentLoaded', () => {
   const addBtn = document.getElementById('add-etiqueta');
   if (addBtn) {
@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         input.type = 'text';
         input.name = 'etiquetas[]';
         input.placeholder = 'Nueva etiqueta';
-        input.classList.add('form-control'); // opcional, para estilo
         container.appendChild(input);
       }
     });

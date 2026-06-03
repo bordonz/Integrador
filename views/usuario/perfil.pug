@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block metadata
+  title Perfil
+  link(rel='stylesheet', href='/perfil.css')
+
+block content
+    .perfil-container
+        .perfil-header
+        h1 #{usuario.firstName} #{usuario.lastName}
+        p.email #{usuario.email}
+
+        .perfil-stats
+            .stat-box Seguidores 5000
+            .stat-box Siguiendo 200
+
+    .perfil-publicaciones
+        h2 Publicaciones
+        if usuario.Publicacions.length
+            include ../publicacion/gallery
+        else
+            p.no-publicaciones No tiene publicaciones aún.
+

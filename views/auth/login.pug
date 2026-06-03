@@ -1,18 +1,16 @@
+extends ../layout.pug
 include ../mixins/alert
 
-doctype html
-html
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/auth.css')
-    title Iniciar sesion
-
-  body
-    +alert(alert)
+block metadata
+  title Iniciar sesion
+  link(rel='stylesheet', href='/auth.css')
+    
+block content
+  +alert(alert)
+  div.auth-wrapper
     div.container
       div.form-wrapper
-        h1 Iniciar sesion
+        h1 Iniciar sesión
         form(method='POST', action='/auth/login')
           div.form-group
             label(for='email') Email
@@ -23,8 +21,8 @@ html
             input(type='password', id='password', name='password', required, value=formValues ? formValues.password : '')
           
           div.form-group.center
-            button(type='submit') Registrarse
+            button(type='submit') Iniciar sesión
           
           p.redirect-link
             | ¿No tienes cuenta? 
-            a(href='/auth/singup') Registrate aquí
+            a(href='/auth/signup') Regístrate aquí

@@ -1,43 +1,41 @@
+extends ../layout.pug
 include ../mixins/alert
 
-doctype html
-html
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/auth.css')
+  block metadata
     title Registrarse
+    link(rel='stylesheet', href='/auth.css')
 
-  body
+  block content
     +alert(alert)
-    div.container
-      div.form-wrapper
-        h1 Registrarse
-        form(method='POST', action='/auth/signup')
-          div.form-group
-            label(for='nombre') Nombre
-            input(type='text', id='nombre', name='nombre', required, value=formValues ? formValues.nombre : '')
+    div.auth-wrapper
+      div.container
+        div.form-wrapper
+          h1 Registrarse
+          form(method='POST', action='/auth/signup')
+            div.form-group
+              label(for='nombre') Nombre
+              input(type='text', id='nombre', name='nombre', required, value=formValues ? formValues.nombre : '')
 
-          div.form-group
-            label(for='apellido') Apellido
-            input(type='text', id='apellido', name='apellido', required, value= formValues ? formValues.apellido : '')
-          
-          div.form-group
-            label(for='email') Email
-            input(type='email', id='email', name='email', required, value= formValues ? formValues.email : '')
-          
-          div.form-group
-            label(for='password') Contraseña
-            input(type='password', id='password', name='password', required, value= formValues ? formValues.password : '')
-          
-          div.form-group
-            label(for='confirmPassword') Confirmar Contraseña
-            input(type='password', id='confirmPassword', name='confirmPassword', required, value= formValues ? formValues.confirmPassword : '')
-          
-          div.form-group.center
-            button(type='submit') Registrarse
-          
-          p.redirect-link
-            | ¿Ya tienes cuenta? 
-            a(href='/auth/login') Inicia sesión aquí
+            div.form-group
+              label(for='apellido') Apellido
+              input(type='text', id='apellido', name='apellido', required, value= formValues ? formValues.apellido : '')
+            
+            div.form-group
+              label(for='email') Email
+              input(type='email', id='email', name='email', required, value= formValues ? formValues.email : '')
+            
+            div.form-group
+              label(for='password') Contraseña
+              input(type='password', id='password', name='password', required, value= formValues ? formValues.password : '')
+            
+            div.form-group
+              label(for='confirmPassword') Confirmar Contraseña
+              input(type='password', id='confirmPassword', name='confirmPassword', required, value= formValues ? formValues.confirmPassword : '')
+            
+            div.form-group.center
+              button(type='submit') Registrarse
+            
+            p.redirect-link
+              | ¿Ya tienes cuenta? 
+              a(href='/auth/login') Inicia sesión aquí
 

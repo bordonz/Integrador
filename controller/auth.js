@@ -36,7 +36,7 @@ export async function login(req, res) {
       })
       return;
     }
-    const isValidated = await Usuario.validatePassword(pass);
+    const isValidated = await usuario.validarPassword(pass);
 
     if(!isValidated){
       res.status(400).render('auth/login', {

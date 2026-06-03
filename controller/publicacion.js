@@ -20,6 +20,10 @@ export async function mostrarPublicacion(req, res) {
             {
                 model: Etiqueta,
                 through: { attributes: [] }
+            },
+            {
+                model: Usuario,
+                attributes: ['id_usuario', 'firstName', 'lastName']
             }]
         });
 
@@ -82,7 +86,9 @@ export async function mostrarPublicacion(req, res) {
                 titulo: pub.titulo,
                 descripcion: pub.descripcion,
                 imagenes: imagenesProcesadas,
-                etiquetas: (pub.Etiqueta || []).map(e => e.nombre)
+                etiquetas: (pub.Etiqueta || []).map(e => e.nombre),
+                id_usuario: pub.Usuario ? pub.Usuario.id_usuario : null,
+                autor: pub.Usuario ? `${pub.Usuario.firstName} ${pub.Usuario.lastName}` : 'Desconocido'
             });
         }
         
@@ -110,16 +116,6 @@ export async function subirPublicacion(req, res) {
             id_usuario: 1
         });
 
-        //Etiquetas
-        /* if(etiquetas && etiquetas.length > 0) {
-            for(const nombre of etiquetas) {
-                if(nombre.trim() !== "") {
-                    const [etiqueta] = await Etiqueta.findOrCreate({ where: { nombre } });
-                    await pub.addEtiqueta(etiqueta);
-                }
-            }
-        } */
-
         const imagenes = req.body.imgs;
 
         for(const img of imagenes) {
@@ -138,7 +134,23 @@ export async function subirPublicacion(req, res) {
             console.log('Imagen guardada con ID:', resultado?.id_imagen);
         }
 
-        res.redirect('publicacion/gallery')
+        // Etiquetas
+        const etiquetasRaw = req.body.etiquetas;
+        const etiquetas = Array.isArray(etiquetasRaw) ? etiquetasRaw : (etiquetasRaw ? [etiquetasRaw] : []);
+
+        console.log('[!]', etiquetas);
+
+        if (etiquetas.length > 0) {
+            for (const nombre of etiquetas) {
+                if (nombre.trim() !== "") {
+                const [etiqueta] = await Etiqueta.findOrCreate({ where: { etiqueta: nombre } });
+                await pub.addEtiqueta(etiqueta);
+                }
+            }
+        }
+
+
+        //res.redirect('publicacion/gallery')
     } catch (error) {
         res.status(500).send('Error al crear la publicación');
     }
