@@ -9,6 +9,7 @@ import authRouter from './routes/auth.js';
 import { optionalAuth } from './middleware/authOpcional.js';
 import { crearNuevoUsuario } from './controller/usuario.js';
 import { authMiddleware } from './middleware/auth.js';
+import seguirRouter from './routes/seguir.js';
 
 // CONSTANTES
 const PORT = process.env.PORT;
@@ -47,6 +48,9 @@ app.use('/publicacion', optionalAuth, publicacionRouter);
 app.use('/valoracion', valoracionRouter);
 
 app.use('/auth', authRouter);
+
+app.use('/seguir', seguirRouter);
+//seguir
 
 app.get('/', (req, res) => {
   res.render('index');

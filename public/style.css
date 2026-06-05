@@ -13,7 +13,7 @@ body {
 }
 
 nav {
-  background-color: #fff;
+  background-color: #0d1b2a;
   width: 100%;
   position: fixed;
   top: 0;
@@ -32,7 +32,7 @@ nav ul li {
 
 nav ul li a {
     display: block;
-    color: #071324;
+    color: #ffffff;
     text-align: center;
     padding: 14px;
     text-decoration: none;

@@ -6,6 +6,7 @@ import { Comentario } from "./Comentario.js";
 import { Imagen } from "./Imagen.js";
 import { Valoracion } from "./Valoracion.js";
 import { Denuncia } from "./Denuncia.js";
+import { Seguir } from "./Seguir.js";
 
 // etiqueta y publicacion con tabla intermedia
 Publicacion.belongsToMany(Etiqueta, {through: 'etiqueta_pub', foreignKey: 'id_publicacion'});
@@ -44,8 +45,10 @@ Usuario.hasMany(Valoracion, {foreignKey: 'id_usuario'});
 Valoracion.belongsTo(Usuario, {foreignKey: 'id_usuario'});
 
 // usuario y usuario con tabla intermedia
-Usuario.belongsToMany(Usuario, {as: 'seguidos', through: 'seguir', foreignKey: 'id_seguidor'});
-Usuario.belongsToMany(Usuario, {as: 'seguidores', through: 'seguir', foreignKey: 'id_seguido'});
+Usuario.belongsToMany(Usuario, {as: 'Seguidos', through: Seguir, foreignKey: 'id_seguidor',
+  otherKey: 'id_seguido'});
+Usuario.belongsToMany(Usuario, {as: 'Seguidores', through: Seguir, foreignKey: 'id_seguido',
+  otherKey: 'id_seguidor'});
 
 
 export async function connectDatabase() {

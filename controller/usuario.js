@@ -82,23 +82,27 @@ export async function cargarPerfil(req, res) {
   try {
     const usuario = await Usuario.findByPk(userId, {
       attributes: ['id_usuario', 'firstName', 'lastName', 'email'],
-      include: [{
-        model: Publicacion,
-        attributes: ['id_publicacion', 'titulo', 'descripcion', 'estado'],
         include: [
-          {
-            model: Imagen,
-            include: [{
-              model: Comentario,
-              include: [Usuario]
-            }]
-          },
-          {
-            model: Etiqueta,
-            through: { attributes: [] }
-          }
+            { model: Usuario, as: 'Seguidores' },
+            { model: Usuario, as: 'Seguidos' },
+            {
+            model: Publicacion,
+            attributes: ['id_publicacion', 'titulo', 'descripcion', 'estado'],
+            include: [
+                {
+                model: Imagen,
+                include: [{
+                    model: Comentario,
+                    include: [Usuario]
+                }]
+                },
+                {
+                model: Etiqueta,
+                through: { attributes: [] }
+                }
+            ]
+            }
         ]
-      }]
     });
 
     if (!usuario) {
