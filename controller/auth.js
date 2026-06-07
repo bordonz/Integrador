@@ -65,7 +65,7 @@ export async function login(req, res) {
   }
 
   // si esta todo ok => luego de redirecciona al home
-  res.redirect('/publicacion/gallery')
+  res.redirect('/galeria')
 }
 
 export async function signupForm(req, res) {
@@ -121,7 +121,7 @@ export async function signup(req, res) {
   }
 
   // si esta todo ok => luego de redirecciona al home
-  res.redirect('/publicacion/gallery')
+  res.redirect('/galeria')
 }
 
 export async function logout(req, res) {

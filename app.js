@@ -2,14 +2,18 @@ import 'dotenv/config';
 import express from 'express';
 import session from 'express-session';
 import { connectDatabase } from './model/index.js';
+
 import usuarioRouter from './routes/usuario.js';
+import seguirRouter from './routes/seguir.js';                  
 import publicacionRouter from './routes/publicacion.js';
 import valoracionRouter from './routes/valoracion.js';
 import authRouter from './routes/auth.js';
+import imagenRouter from './routes/imagen.js';
+import buscadorRouter from './routes/buscador.js';
+
 import { optionalAuth } from './middleware/authOpcional.js';
 import { crearNuevoUsuario } from './controller/usuario.js';
 import { authMiddleware } from './middleware/auth.js';
-import seguirRouter from './routes/seguir.js';
 
 // CONSTANTES
 const PORT = process.env.PORT;
@@ -41,20 +45,20 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 // RUTAS
-app.use('/usuario', optionalAuth, usuarioRouter);
+app.use('/usuario', authMiddleware, usuarioRouter);
 
-app.use('/publicacion', optionalAuth, publicacionRouter);
+app.use('/publicacion', authMiddleware, publicacionRouter);
 
-app.use('/valoracion', valoracionRouter);
+app.use('/valoracion', authMiddleware, valoracionRouter);
 
 app.use('/auth', authRouter);
 
+//TODO: validar auth para seguir 
 app.use('/seguir', seguirRouter);
-//seguir
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
+app.use('/', optionalAuth, imagenRouter);
+
+app.use('/buscar', buscadorRouter);
 
 // CONEXION A BD
 connectDatabase()

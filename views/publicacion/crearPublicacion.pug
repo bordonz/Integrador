@@ -1,42 +1,39 @@
-
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+extends ../layout.pug
+block metadata 
+    title Subir Publicacion
     link(rel='stylesheet', href='/style.css')
-    title Document
-  body
-    div#imgsPreview
-    form(action="/publicacion/crearPublicacion" method="post" class="form-publicacion")
-      div(class="form-group")
-        label(for="img") Seleccionar imágenes
-        input(type="file" name="img" id="img" multiple class="form-control")
-      div#imgsBase64
-      div(class="form-group")
-        label(for="titulo") Título
-        input(type="text" name="titulo" id="titulo" class="form-control")
+block content
+  div#imgsPreview
+  form(action="/publicacion/crearPublicacion" method="post" class="form-publicacion")
+    div(class="form-group")
+      label(for="img") Seleccionar imágenes
+      input(type="file" name="img" id="img" multiple class="form-control")
+    div#imgsBase64
+    div(class="form-group")
+      label(for="titulo") Título
+      input(type="text" name="titulo" id="titulo" class="form-control")
 
-      div(class="form-group")
-        label(for="descripcion") Descripción
-        input(type="text" name="descripcion" id="descripcion" class="form-control")
+    div(class="form-group")
+      label(for="descripcion") Descripción
+      input(type="text" name="descripcion" id="descripcion" class="form-control")
 
-      input(type="hidden" name="id_usuario" value="1")
+    input(type="hidden" name="id_usuario" value="1")
 
-      div.form-group
-        label(for="etiquetas") Etiquetas
-        div#etiquetas-container
-        input(type="text" name="etiquetas[]" id="etiquetas" placeholder="Etiqueta 1")
-        button(type="button" id="add-etiqueta") + Agregar etiqueta
+    div.form-group
+      label(for="etiquetas") Etiquetas
+      div#etiquetas-container
+      input(type="text" name="etiquetas[]" id="etiquetas" placeholder="Etiqueta 1")
+      button(type="button" id="add-etiqueta") + Agregar etiqueta
 
-      input(type="submit" value="Enviar" class="btn-submit")
+    input(type="submit" value="Enviar" class="btn-submit")
 
-      div
-        ul#errores(class="errores")
+    div
+      ul#errores(class="errores")
 
-    if imagenes
-      h1 Imagen Resultante
-      each imagen in imagenes
-        p #{imagen.name}
-        img(src=imagen.src, style="width:200px")
+  if imagenes
+    h1 Imagen Resultante
+    each imagen in imagenes
+      p #{imagen.name}
+      img(src=imagen.src, style="width:200px")
 
-    script(src="/imgbase64.js")
+  script(src="/imgbase64.js")
