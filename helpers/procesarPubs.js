@@ -61,13 +61,14 @@ export async function procesarPublicaciones(publicaciones) {
                     console.log(`    Imagen inválida:`, imagen);
                 }
             }
+            console.log('Etiquetas crudas:', pub.Etiquetas);
             
             publicacionesProcesadas.push({
                 id: pub.id_publicacion,
                 titulo: pub.titulo,
                 descripcion: pub.descripcion,
                 imagenes: imagenesProcesadas,
-                etiquetas: (pub.Etiqueta || []).map(e => e.nombre),
+                etiquetas: (pub.Etiquetas || []).map(e => e.etiqueta),
                 id_usuario: pub.Usuario ? pub.Usuario.id_usuario : null,
                 autor: pub.Usuario ? `${pub.Usuario.firstName} ${pub.Usuario.lastName}` : 'Desconocido'
             });

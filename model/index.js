@@ -9,8 +9,8 @@ import { Denuncia } from "./Denuncia.js";
 import { Seguir } from "./Seguir.js";
 
 // etiqueta y publicacion con tabla intermedia
-Publicacion.belongsToMany(Etiqueta, {through: 'etiqueta_pub', foreignKey: 'id_publicacion'});
-Etiqueta.belongsToMany(Publicacion, {through: 'etiqueta_pub', foreignKey: 'id_etiqueta'});
+Publicacion.belongsToMany(Etiqueta, {through: 'etiqueta_pub', foreignKey: 'id_publicacion', as: 'Etiquetas'});
+Etiqueta.belongsToMany(Publicacion, {through: 'etiqueta_pub', foreignKey: 'id_etiqueta', as: 'Publicaciones'});
 
 // publicacion y usuario (1:n)
 Usuario.hasMany(Publicacion, {foreignKey: 'id_usuario'});

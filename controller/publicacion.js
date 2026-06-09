@@ -18,21 +18,7 @@ export async function subirPublicacion(req, res) {
             id_usuario: req.session.usuario.id
         });
 
-        
-        //TODO: Llega undefined
-/*         const imagenes = req.body.imgs; */
-          // PRUEBA: Ver qué llega realmente
-    console.log('=== DEBUG TOTAL ===');
-    console.log('Headers:', req.headers);
-    console.log('Body:', req.body);
-    console.log('Keys del body:', Object.keys(req.body));
-    console.log('imgs:', req.body.imgs);
-    
-    // Intenta obtener imágenes de diferentes formas
-    const imagenes = req.body.imagens;
-    console.log('Imagenes encontradas:', imagenes);
-    
-    res.send('Debug - revisa la consola del servidor');
+    const imagenes = req.body.imgs;
     
         for(const img of imagenes) {
             if (!img?.src) {
@@ -55,10 +41,8 @@ export async function subirPublicacion(req, res) {
         } 
 
         // Etiquetas
-        /* const etiquetasRaw = req.body.etiquetas;
+        const etiquetasRaw = req.body.etiquetas;
         const etiquetas = Array.isArray(etiquetasRaw) ? etiquetasRaw : (etiquetasRaw ? [etiquetasRaw] : []);
-
-        console.log('[!]', etiquetas);
 
         if (etiquetas.length > 0) {
             for (const nombre of etiquetas) {
@@ -67,7 +51,8 @@ export async function subirPublicacion(req, res) {
                     await pub.addEtiqueta(etiqueta);
                 }
             }
-        } */
+        }
+ 
         res.redirect('publicacion/gallery')
     } catch (error) {
         console.error('Error detallado:', error);

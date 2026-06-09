@@ -11,11 +11,20 @@ const arregloImgs = [];
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  // Recolectar etiquetas dinámicas
+ const etiquetasInputs = document.querySelectorAll('input[name="etiquetas[]"]');
+const etiquetas = Array.from(etiquetasInputs)
+                       .map(input => input.value.trim())
+                       .filter(v => v !== "");
+
+
   const bodyToSend = {
     imgs: arregloImgs,
     fecha: new Date().toLocaleTimeString(),
     titulo: document.getElementById('titulo').value,
-    descripcion: document.getElementById('descripcion').value
+    descripcion: document.getElementById('descripcion').value,
+    etiquetas
   }
   fetch(form.action, {
     method: 'post',
@@ -86,7 +95,7 @@ function validarFile(file) {
 }
 
 //- Manejo de etiquetas dinámicas 
-/* document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const addBtn = document.getElementById('add-etiqueta');
   if (addBtn) {
     addBtn.addEventListener('click', () => {
@@ -101,4 +110,4 @@ function validarFile(file) {
     });
   }
 });
- */
+ 

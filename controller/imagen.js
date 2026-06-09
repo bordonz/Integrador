@@ -119,6 +119,7 @@ export async function mostrarPublicacion(req, res) {
         },
         {
           model: Etiqueta,
+          as: 'Etiquetas',
           through: { attributes: [] }
         },
         {
