@@ -100,6 +100,7 @@ export async function cargarPerfil(req, res) {
                 },
                 {
                 model: Etiqueta,
+                as: 'Etiquetas',
                 through: { attributes: [] }
                 }
             ]

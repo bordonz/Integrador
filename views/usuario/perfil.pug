@@ -9,10 +9,10 @@ block content
     .perfil-header
       h1 #{usuario.firstName} #{usuario.lastName}
       if estaSeguido
-        form(action=`/usuario/seguir/${usuario.id_usuario}/unfollow`, method="POST")
+        form(action=`/seguir/${usuario.id_usuario}/unfollow`, method="POST")
           button(type="submit") No seguir
       else
-        form(action=`/usuario/seguir/${usuario.id_usuario}`, method="POST")
+        form(action=`/seguir/${usuario.id_usuario}`, method="POST")
           button(type="submit") Seguir
 
     .perfil-stats
@@ -21,7 +21,7 @@ block content
 
   .perfil-publicaciones
     h2 Publicaciones
-    if usuario.Publicacions?.length
+    if usuario.Publicacions.length
       include ../publicacion/gallery
     else
       p.no-publicaciones No tiene publicaciones aún.
