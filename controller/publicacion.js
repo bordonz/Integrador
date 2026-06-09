@@ -18,9 +18,27 @@ export async function subirPublicacion(req, res) {
             id_usuario: req.session.usuario.id
         });
 
-        const imagenes = req.body.imgs;
-
+        
+        //TODO: Llega undefined
+/*         const imagenes = req.body.imgs; */
+          // PRUEBA: Ver qué llega realmente
+    console.log('=== DEBUG TOTAL ===');
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
+    console.log('Keys del body:', Object.keys(req.body));
+    console.log('imgs:', req.body.imgs);
+    
+    // Intenta obtener imágenes de diferentes formas
+    const imagenes = req.body.imagens;
+    console.log('Imagenes encontradas:', imagenes);
+    
+    res.send('Debug - revisa la consola del servidor');
+    
         for(const img of imagenes) {
+            if (!img?.src) {
+                console.warn('Imagen sin src:', img);
+                continue;
+            }
             const textBase64 = img.src;
 
             const arregloBase64 = textBase64.split(',');
@@ -32,12 +50,12 @@ export async function subirPublicacion(req, res) {
                 id_publicacion: pub.id_publicacion,
                 metadata: arregloBase64[0]
             };
-            const resultado = await Imagen.crearImagen(imagenCreada);
-            console.log('Imagen guardada con ID:', resultado?.id_imagen);
-        }
+            await Imagen.crearImagen(imagenCreada);
+
+        } 
 
         // Etiquetas
-        const etiquetasRaw = req.body.etiquetas;
+        /* const etiquetasRaw = req.body.etiquetas;
         const etiquetas = Array.isArray(etiquetasRaw) ? etiquetasRaw : (etiquetasRaw ? [etiquetasRaw] : []);
 
         console.log('[!]', etiquetas);
@@ -45,15 +63,14 @@ export async function subirPublicacion(req, res) {
         if (etiquetas.length > 0) {
             for (const nombre of etiquetas) {
                 if (nombre.trim() !== "") {
-                const [etiqueta] = await Etiqueta.findOrCreate({ where: { etiqueta: nombre } });
-                await pub.addEtiqueta(etiqueta);
+                    const [etiqueta] = await Etiqueta.findOrCreate({ where: { etiqueta: nombre } });
+                    await pub.addEtiqueta(etiqueta);
                 }
             }
-        }
-
-
-        //res.redirect('publicacion/gallery')
+        } */
+        res.redirect('publicacion/gallery')
     } catch (error) {
+        console.error('Error detallado:', error);
         res.status(500).send('Error al crear la publicación');
     }
 }

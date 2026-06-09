@@ -5,21 +5,23 @@ block metadata
   link(rel='stylesheet', href='/perfil.css')
 
 block content
-    .perfil-container
-        .perfil-header
-            h1 #{usuario.firstName} #{usuario.lastName}
-            form(action=`/seguir/${usuario.id_usuario}`, method="POST")
-                button(type="submit") Seguir
+  .perfil-container
+    .perfil-header
+      h1 #{usuario.firstName} #{usuario.lastName}
+      if estaSeguido
+        form(action=`/usuario/seguir/${usuario.id_usuario}/unfollow`, method="POST")
+          button(type="submit") No seguir
+      else
+        form(action=`/usuario/seguir/${usuario.id_usuario}`, method="POST")
+          button(type="submit") Seguir
 
-            form(action=`/seguir/${usuario.id_usuario}/unfollow`, method="POST")
-                button(type="submit") No seguir
-        .perfil-stats
-            .stat-box Seguidores #{usuario.Seguidores.length}
-            .stat-box Siguiendo #{usuario.Seguidos.length}
-    .perfil-publicaciones
-        h2 Publicaciones
-        if usuario.Publicacions.length
-            include ../publicacion/gallery
-        else
-            p.no-publicaciones No tiene publicaciones aún.
+    .perfil-stats
+      .stat-box Seguidores #{usuario.Seguidores.length}
+      .stat-box Siguiendo #{usuario.Seguidos.length}
 
+  .perfil-publicaciones
+    h2 Publicaciones
+    if usuario.Publicacions?.length
+      include ../publicacion/gallery
+    else
+      p.no-publicaciones No tiene publicaciones aún.

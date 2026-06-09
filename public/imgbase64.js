@@ -4,20 +4,18 @@ const errores = document.getElementById('errores');
 const contenedorImgs = document.getElementById('imgsBase64');
 const contenedorPreviews = document.getElementById('imgsPreview');
 
-const form = document.forms[0];
+const form = document.querySelector('.form-publicacion');
 
 const arregloImgs = [];
 
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-
   const bodyToSend = {
     imgs: arregloImgs,
     fecha: new Date().toLocaleTimeString(),
     titulo: document.getElementById('titulo').value,
-    descripcion: document.getElementById('descripcion').value,
-    // etiquetas: Array.from(document.querySelectorAll('input[name="etiquetas[]"]')).map(e => e.value)
+    descripcion: document.getElementById('descripcion').value
   }
   fetch(form.action, {
     method: 'post',
@@ -27,7 +25,7 @@ form.addEventListener('submit', (e) => {
     body: JSON.stringify(bodyToSend)
   }).then(() => {
     //redirigir a GET /gallery
-    window.location.assign('gallery')
+    window.location.assign('/galeria')
   }).catch((err) => {
     console.log(err)
   })
@@ -88,7 +86,7 @@ function validarFile(file) {
 }
 
 //- Manejo de etiquetas dinámicas 
-document.addEventListener('DOMContentLoaded', () => {
+/* document.addEventListener('DOMContentLoaded', () => {
   const addBtn = document.getElementById('add-etiqueta');
   if (addBtn) {
     addBtn.addEventListener('click', () => {
@@ -103,4 +101,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
+ */

@@ -33,8 +33,8 @@ app.use(session({
     sameSite: 'lax', 
   },
 }));
-app.use(express.json({ limit: '20mb' }));
-app.use(express.urlencoded({ limit: '20mb', extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use((req, res, next)=>{
   res.locals.currentPath = req.path;
   next()

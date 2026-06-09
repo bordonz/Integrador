@@ -36,10 +36,11 @@ export async function seguirUsuario(req, res) {
         where: { id_seguidor: idSeguidor, id_seguido: idSeguido}
     });
 
-    res.render('usuario/perfil', { usuario, estaSeguido: !!estaSeguido});
+    res.redirect(`/usuario/${idSeguido}`);
+    //res.render('usuario/perfil', { usuario, estaSeguido: !!estaSeguido});
   } catch (error) {
     console.error("[!] Error al seguir:", error);
-    res.status(500).send("Error interno");
+    res.status(500).send("Ya sigues a este usuario");
   }
 }
 
@@ -58,16 +59,19 @@ export async function dejarDeSeguir(req, res) {
 
     // Buscar la relación
     const relacion = await Seguir.findOne({
-      where: { id_seguidor: idSeguidor, id_seguido: idSeguido }
+      where: { id_seguidor: idSeguidor, id_seguido: idSeguido },
+      paranoid: false
     });
 
     if (relacion) {
-      await relacion.destroy();
+      await relacion.destroy({ force: true });
       console.log(`[+] Usuario ${idSeguidor} dejó de seguir a ${idSeguido}`);
     } else {
       console.log(`[!] No existía relación: ${idSeguidor} → ${idSeguido}`);
     }
 
+    //res.render('usuario/perfil', { usuario, estaSeguido: !!estaSeguido});
+    res.redirect(`/usuario/${idSeguido}`);
   } catch (error) {
     console.error("[!] Error al dejar de seguir:", error);
     res.status(500).send("Error interno");

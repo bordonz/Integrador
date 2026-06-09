@@ -21,9 +21,12 @@ nav {
 }
 
 nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 20px; 
 }
 
 nav ul li {
@@ -58,7 +61,7 @@ nav ul li.nav-user .nav-user-profile {
 }
 
 nav ul li a:hover {
-    background-color: rgb(22, 41, 33);
+    color: #007bff;
 } 
 
 form {
@@ -114,4 +117,51 @@ form {
   color: red;
   font-size: 0.9em;
   margin-top: 10px;
+}
+
+/* buscador */
+li.nav-search {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* empuja el buscador hacia la derecha */
+}
+
+/* Formulario */
+li.nav-search form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Input de búsqueda */
+li.nav-search input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+li.nav-search input[type="text"]:focus {
+  border-color: #007bff; /* color al hacer foco */
+}
+
+/* Botón con el ícono */
+li.nav-search button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+}
+
+li.nav-search button svg {
+  fill: #fffbfb;
+  transition: fill 0.3s;
+}
+
+li.nav-search button:hover svg {
+  fill: #007bff;
 }

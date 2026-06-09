@@ -5,6 +5,7 @@ import { Imagen } from '../model/Imagen.js';
 import { Comentario } from '../model/Comentario.js';
 import { Valoracion } from '../model/Valoracion.js';
 import { Etiqueta } from '../model/Etiqueta.js';
+import { Seguir } from "../model/Seguir.js";
 import sequelize from '../db/config.js';
 
 export async function crearNuevoUsuario(req, res) {
@@ -79,6 +80,7 @@ export async function cargarPerfil(req, res) {
     return res.status(400).send('ID de usuario inválido');
   }
 
+  const idLogueado = req.session?.usuario?.id;
   try {
     const usuario = await Usuario.findByPk(userId, {
       attributes: ['id_usuario', 'firstName', 'lastName', 'email'],
@@ -151,7 +153,12 @@ export async function cargarPerfil(req, res) {
       });
     }
 
-    res.render('usuario/perfil', {usuario, publicaciones: publicacionesProcesadas});
+    // Verificar si el logueado sigue al usuario
+    const estaSeguido = await Seguir.findOne({
+      where: { id_seguidor: idLogueado, id_seguido: userId }
+    });
+
+    res.render('usuario/perfil', {usuario, publicaciones: publicacionesProcesadas, estaSeguido: !!estaSeguido});
 
   } catch (error) {
     console.error('[!] Error cargando perfil:', error);
