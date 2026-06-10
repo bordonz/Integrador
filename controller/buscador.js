@@ -12,7 +12,18 @@ export async function buscar(req, res) {
     try {
         const busqueda = req.query.buscar;
         const publicaciones = await Publicacion.findAll({
-            where: { titulo: { [Op.like]: `%${busqueda}%` } },
+            where: { 
+                [Op.or]: [
+                    {titulo: { [Op.like]: `%${busqueda}%` } },
+                    sequelize.where(
+                        sequelize.fn('concat', sequelize.col('Usuario.firstName'), ' ', sequelize.col('Usuario.lastName')),
+                        { [Op.like]: `%${busqueda}%` }
+                    ),
+                    { '$Usuario.firstName$': { [Op.like]: `%${busqueda}%` } },
+                    { '$Usuario.lastName$': { [Op.like]: `%${busqueda}%` } },
+                    { '$Etiquetas.etiqueta$': { [Op.iLike]: `%${busqueda}%` } }
+                ]
+            },
             include: [{
                 model: Imagen,
                 include: [{
@@ -23,6 +34,7 @@ export async function buscar(req, res) {
                 },
             {
                 model: Etiqueta,
+                as: 'Etiquetas',
                 through: { attributes: [] }
             },
             {
@@ -33,6 +45,7 @@ export async function buscar(req, res) {
         const publicacionesProcesadas = await procesarPublicaciones(publicaciones);
         res.render('publicacion/gallery', { publicaciones: publicacionesProcesadas });
     } catch (error) {
+        console.error('[!] Error al buscar:', error);
         res.status(500).send('Error al cargar las publicaciones buscadas');
     }
 }
