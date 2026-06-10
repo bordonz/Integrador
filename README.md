@@ -87,13 +87,13 @@ El proyecto incluye un seed que crea dos usuarios de prueba:
 
 - Usuario de prueba uno:
     
-    - Email: test@test.dev
+    - Email: test@gmail.com
     
     - Password: test123
 
 - Usuario de prueba dos:
 
-    - Email: harry@example.com
+    - Email: harry@gmail.com
     - Password: haer123
 
 Esto permite autenticacion para crear publicaciones y poder probar las funcionalidades de la aplicación.
