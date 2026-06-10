@@ -8,6 +8,14 @@ import { Valoracion } from "./Valoracion.js";
 import { Denuncia } from "./Denuncia.js";
 import { Seguir } from "./Seguir.js";
 
+let associationsInitialized = false;
+
+export function initializeAssociations() {
+  if (associationsInitialized) {
+    return;
+  }
+}
+
 // etiqueta y publicacion con tabla intermedia
 Publicacion.belongsToMany(Etiqueta, {through: 'etiqueta_pub', foreignKey: 'id_publicacion', as: 'Etiquetas'});
 Etiqueta.belongsToMany(Publicacion, {through: 'etiqueta_pub', foreignKey: 'id_etiqueta', as: 'Publicaciones'});
