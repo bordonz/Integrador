@@ -50,7 +50,8 @@ Código:
     npm install
 
 ### Configurar variables de entorno en .env:
-- Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+- Copiar archivos de ejemplo:
+.env.example → .env
 
         PORT=3000                # Puerto donde corre el servidor
 
