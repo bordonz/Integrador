@@ -25,6 +25,5 @@ mixin nav
             button(type="submit") Salir
         li.nav-user
           div.nav-user-profile
-            a(href=`/usuario/${currentUser.id_usuario}`)
-            span #{currentUser.firstName} #{currentUser.lastName}
+            a(href=`/usuario/${currentUser.id_usuario}`) #{currentUser.firstName} #{currentUser.lastName}
             //-img(src='/icons/user-svgrepo-com.svg', alt='Usuario', width='22', height='22')

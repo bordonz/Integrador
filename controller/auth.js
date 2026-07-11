@@ -4,6 +4,7 @@ export async function loginForm(req, res) {
   res.render('auth/login')
 }
 
+//TODO: Validar con zod email
 export async function login(req, res) {
   const { email, password } = req.body;
   const mail = email.trim();
@@ -30,7 +31,7 @@ export async function login(req, res) {
       res.status(400).render('auth/login', {
         alert: {
           status: "error",
-          text: "Usuario o contrasena incorrecta."
+          text: "Usuario o contraseña incorrecta."
         },
         formValues: req.body
       })
@@ -64,7 +65,7 @@ export async function login(req, res) {
     return;
   }
 
-  // si esta todo ok => luego de redirecciona al home
+  // si esta todo ok => redirecciona al home
   res.redirect('/galeria')
 }
 
@@ -72,6 +73,7 @@ export async function signupForm(req, res) {
   res.render('auth/signup')
 }
 
+//TODO: Validar con zod
 export async function signup(req, res) {
   const { nombre, email, password, confirmPassword, apellido } = req.body
 

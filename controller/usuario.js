@@ -7,7 +7,9 @@ import { Valoracion } from '../model/Valoracion.js';
 import { Etiqueta } from '../model/Etiqueta.js';
 import { Seguir } from "../model/Seguir.js";
 import sequelize from '../db/config.js';
+import { procesarPublicaciones } from "../helpers/procesarPubs.js";
 
+//TODO: Usar las alertas
 export async function crearNuevoUsuario(req, res) {
     try {
         const body = req.body
@@ -69,10 +71,6 @@ export async function crearNuevoUsuario(req, res) {
     }
 };
 
-export async function seguirUsuario(params) {
-    
-}
-
 export async function cargarPerfil(req, res) {
   const userId = parseInt(req.params.id, 10);
 
@@ -111,48 +109,7 @@ export async function cargarPerfil(req, res) {
     if (!usuario) {
       return res.status(404).render('error', { message: 'Usuario no encontrado' });
     }
-
-    // Procesar publicaciones igual que en gallery
-    const publicacionesProcesadas = [];
-
-    for (const pub of usuario.Publicacions) {
-      const imagenesProcesadas = [];
-
-      for (const img of pub.Imagens || []) {
-        // calcular promedio de valoraciones
-        const promedio = await Valoracion.findAll({
-          attributes: [[sequelize.fn('AVG', sequelize.col('puntaje')), 'promedio']],
-          where: { id_imagen: img.id_imagen },
-          raw: true
-        });
-
-        const comentarios = (img.Comentarios || []).map(c => ({
-          id: c.id_comentario,
-          texto: c.descripcion,
-          autor: c.Usuario ? `${c.Usuario.firstName}` : 'Usuario',
-          fecha: c.createdAt ? c.createdAt.toLocaleString() : ''
-        }));
-
-        imagenesProcesadas.push({
-          id: img.id_imagen,
-          name: img.nombre,
-          src: `data:image/${img.metadata};base64,${img.contenido.toString('base64')}`,
-          descripcion: img.descripcion || '',
-          comentarios,
-          promedio: promedio[0].promedio ? parseInt(promedio[0].promedio) : null
-        });
-      }
-
-      publicacionesProcesadas.push({
-        id: pub.id_publicacion,
-        titulo: pub.titulo,
-        descripcion: pub.descripcion,
-        imagenes: imagenesProcesadas,
-        etiquetas: (pub.Etiquetas || []).map(e => e.nombre),
-        id_usuario: usuario.id_usuario,
-        autor: `${usuario.firstName} ${usuario.lastName}`
-      });
-    }
+    const publicacionesProcesadas = await procesarPublicaciones(usuario.Publicacions);
 
     // Verificar si el logueado sigue al usuario
     const estaSeguido = await Seguir.findOne({

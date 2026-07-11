@@ -21,10 +21,9 @@ block content
 
 
                   div.etiquetas-wrapper 
-                    p Etiquetas: 
                     ul 
                       each etiqueta in publicacion.etiquetas 
-                        li= etiqueta 
+                        li #{'#' + etiqueta}
 
                   //- Bloque de valoración
                   div.valoracion-wrapper

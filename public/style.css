@@ -15,9 +15,7 @@ body {
 nav {
   background-color: #0d1b2a;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  height: 60px;
 }
 
 nav ul {
@@ -30,7 +28,7 @@ nav ul {
 }
 
 nav ul li {
-    float: left;
+  float: left;
 }
 
 nav ul li a {

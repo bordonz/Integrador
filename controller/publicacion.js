@@ -6,8 +6,6 @@ import { Valoracion } from '../model/Valoracion.js';
 import { Etiqueta } from '../model/Etiqueta.js';
 import sequelize  from '../db/config.js';
 
-//NOTA: Lo que generaba que no se subieran las imagenes es que se
-//rompia silenciosamente en las etiquetas
 export async function subirPublicacion(req, res) {
     try {
         //Crea y guarda la publicacion
@@ -63,7 +61,7 @@ export async function subirPublicacion(req, res) {
 
 export async function subirComentario(req, res) {
     try {
-    //NOTA: const sin uso
+    //TODO: const sin uso
         const com = await Comentario.subirComentario({
             descripcion: req.body.descripcion,
             estado: "Sin denuncias",
