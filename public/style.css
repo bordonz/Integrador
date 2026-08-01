@@ -61,12 +61,11 @@ nav ul li.nav-user .nav-user-profile {
 nav ul li a:hover {
     color: #007bff;
 } 
-
+/*
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-width: 500px;
   margin: 20px 0;
 }
 
@@ -110,7 +109,7 @@ form {
 .btn-submit:hover {
   background: #0056b3;
 }
-
+*/
 .errores {
   color: red;
   font-size: 0.9em;

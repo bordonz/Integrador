@@ -8,18 +8,6 @@
 
 body {
   background: #071324;
-  min-height: 100vh;
-}
-
-header {
-  text-align: center;
-  padding: 40px 0;
-  color: white;
-}
-
-header h1 {
-  font-size: 2.5em;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 /* Contenedor de la galería */
@@ -36,7 +24,7 @@ header h1 {
   background: white;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,2.2);
   transition: transform 0.3s ease;
 }
 
@@ -77,7 +65,7 @@ header h1 {
 .carrusel-slide .gallery-info {
   padding: 15px;
   background: #fff;
-  color: #333;
+  color: #071324;;
   text-align: left;
 }
 /* Contenedor del carrusel */
@@ -85,7 +73,7 @@ header h1 {
 
 .gallery-title {
   font-size: 1.3em;
-  color: #333;
+
   margin-bottom: 10px;
   font-weight: bold;
 }
@@ -96,28 +84,46 @@ header h1 {
   margin-bottom: 10px;
   font-size: 0.9em;
 }
-/* VALORACION */
-.valoracion-form {
-  display: flex;
-  flex-direction: row;   /* explícito */
-  align-items: center;
-  gap: 8px;
+
+.gallery-autor {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  font-size: 0.9em;
 }
 
+/* VALORACION  revisar display flex*/
+.valoracion-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 17px 0px 17px 0px;
+}
 
 .valoracion-form select {
-  padding: 6px 10px;
+  padding: 6px 13px;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #071324;;
 }
 
 .valoracion-form button {
-  padding: 6px 12px;
+  width: 95px;
+  height: 35px;
   background-color: #071324;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 9px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bi-star {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
 }
 
 .valoracion-form button:hover {
@@ -130,12 +136,13 @@ header h1 {
 /* Formulario de comentarios */
 .comentario-form {
   display: flex;
+  flex-direction: row;
   gap: 5px;
-  margin-top: 10px;
+  margin-bottom: 17px;
 }
 
 .comentario-form input {
-  flex: 1;
+  width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -144,39 +151,49 @@ header h1 {
 }
 
 .comentario-form button {
-  padding: 5px 10px;
-  background: #071324;
+  padding: 12px 18px;
+  background: #4455cc;
   border: none;
-  border-radius: 3px;
+  border-radius: 9px;
   color: #fff;
   cursor: pointer;
 }
 
 .comentario-form button:hover {
-  background: #4455cc;
+  background: #071324;
 }
 
 .comentarios-wrapper {
   max-height: 60px;   /* altura máxima visible */
+  height: 100px;
   overflow-y: scroll;    /* agrega scroll vertical si se excede */
   padding: 5px;
   border: 1px solid #ddd; /* opcional, para delimitar */
   border-radius: 4px;
   background-color: #fafafa; /* opcional */
 }
-/* Formulario de comentarios */
 
-
-/* Meta de imágenes */
-.gallery-meta {
-  display: inline-block;
-  background: #667eea;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.8em;
-  margin: 10px;
+.input-wrapper {
+  position: relative;
+  width: 100%;
 }
+
+.input-wrapper svg {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: gray;
+}
+
+.input-wrapper input {
+  padding-left: 45px; /* espacio para que el texto no se superponga con el icono */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  height: 50px;
+}
+
+/* Formulario de comentarios */
 
 /* Botones carrusel */
 .carrusel-btn {
@@ -186,16 +203,20 @@ header h1 {
   background: #071324;
   color: white;
   border: none;
-  padding: 15px 20px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 10;
   transition: background 0.3s ease;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 
 .carrusel-btn:hover {
-  background: rgba(0,0,0,0.9);
+  background: #667eea;
 }
 
 .prev {
@@ -206,30 +227,14 @@ header h1 {
   right: 10px;
 }
 
-/* Sin imágenes */
-.sin-imagenes {
-  width: 100%;
-  height: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f0f0f0;
-  color: #666;
+.etiqueta {
+  display: inline-block;
+  background: #4455cc;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 11px;
+  margin-right: 6px;
+  font-size: 0.76em;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .gallery-container {
-    grid-template-columns: 1fr;
-    padding: 10px;
-  }
-  
-  .carrusel-slide img {
-    height: 200px;
-  }
-  
-  .carrusel-btn {
-    padding: 10px 15px;
-    font-size: 16px;
-  }
-}
+

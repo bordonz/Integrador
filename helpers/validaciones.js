@@ -20,11 +20,11 @@ const Usuario = z.object({
 export function validarUsuario(usuario) {
     const resultado = Usuario.safeParse(usuario);
 
-    if(resultado.success === false){
-    return {
-      success: false,
-      errors: z.flattenError(resultado.error).fieldErrors
-    }
+    if(!resultado.success){
+      return {
+        success: false,
+        errors: z.flattenError(resultado.error).fieldErrors
+      }
   }
   
   return {
@@ -34,3 +34,8 @@ export function validarUsuario(usuario) {
 
 
 //ESQUEMA DE VALIDACION DE publicacion
+const Publicacion = z.object({
+  titulo: z.string('Debe ingresar un titulo')
+  .max(50, "El firstName debe tener como máximo 50 caracteres"),
+  descpcion: z.string('')
+});

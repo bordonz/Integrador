@@ -18,12 +18,10 @@ block content
                   p.gallery-autor 
                     | Subido por: 
                     a(href=`/usuario/${publicacion.id_usuario}`) #{publicacion.autor}
-
-
                   div.etiquetas-wrapper 
-                    ul 
+                    ul
                       each etiqueta in publicacion.etiquetas 
-                        li #{'#' + etiqueta}
+                        li.etiqueta #{'#' + etiqueta}
 
                   //- Bloque de valoración
                   div.valoracion-wrapper
@@ -34,11 +32,20 @@ block content
                         option(value="3") 3
                         option(value="4") 4
                         option(value="5") 5
-                      button(type="submit") Valorar
+                      button(type="submit")
+                        svg(xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi-star" viewBox="0 0 16 16")
+                          path(d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z")
+                        | Valorar
 
                   form.comentario-form(data-publicacion-idx=idx, action=`/publicacion/crearComentario/${imagen.id}`, method="POST")
-                    input(type="text", name="descripcion", placeholder="Escribir comentario")
-                    button(type="submit") Comentar
+                    div.input-wrapper
+                      svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16")
+                        path(d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z")
+                        path(d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0")
+                      input(type="text", name="descripcion", placeholder="Escribir comentario...")
+                    button(type="submit") 
+                      svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16")
+                        path(d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z")
 
                   //- Comentarios de esta imagen
                   div.comentarios-wrapper(data-img-id=imagen.id)
