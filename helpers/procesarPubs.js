@@ -45,8 +45,8 @@ export async function procesarPublicaciones(publicaciones) {
                     const comentarios = (imagen.Comentarios || []).map(c => ({
                         id: c.id_comentario,
                         texto: c.descripcion,
-                        autor: c.Usuario ? `${c.Usuario.firstName}` : 'Usuario',
-                        fecha: c.createdAt ? c.createdAt.toLocaleString() : ''
+                        autor: c.Usuario ? `${c.Usuario.firstName} ${c.Usuario.lastName}` : 'Usuario',
+                        fecha: c.createdAt ? c.createdAt.toLocaleDateString() : ''
                     }));
 
                     imagenesProcesadas.push({
@@ -70,7 +70,8 @@ export async function procesarPublicaciones(publicaciones) {
                 imagenes: imagenesProcesadas,
                 etiquetas: (pub.Etiquetas || []).map(e => e.etiqueta),
                 id_usuario: pub.Usuario ? pub.Usuario.id_usuario : null,
-                autor: pub.Usuario ? `${pub.Usuario.firstName} ${pub.Usuario.lastName}` : 'Desconocido'
+                autor: pub.Usuario ? `${pub.Usuario.firstName} ${pub.Usuario.lastName}` : 'Desconocido',
+                fecha: pub.createdAt ? pub.createdAt.toLocaleDateString() : ''
             });
         }
         

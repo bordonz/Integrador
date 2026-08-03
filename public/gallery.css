@@ -49,6 +49,7 @@ body {
   display: none;              /* ocultar por defecto */
   flex-direction: column;     /* imagen arriba, info abajo */
   background: #fff;
+  position: relative;
 }
 
 .carrusel-slide.active {
@@ -88,8 +89,14 @@ body {
 .gallery-autor {
   color: #666;
   line-height: 1.5;
-  margin-bottom: 10px;
   font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.gallery-autor a {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* VALORACION  revisar display flex*/
@@ -107,7 +114,7 @@ body {
   border: 1px solid #071324;;
 }
 
-.valoracion-form button {
+.valoracion-form button:first-of-type {
   width: 95px;
   height: 35px;
   background-color: #071324;
@@ -120,6 +127,21 @@ body {
   justify-content: center;
 }
 
+.valoracion-form button:last-of-type {
+  width: 65px;
+  height: 35px;
+  stroke-width: 2px;
+  border: 3px solid #0056b3; 
+  border-radius: 8px;
+  color: #0056b3;
+  stroke: currentColor;
+  stroke-width: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .bi-star {
   width: 15px;
   height: 15px;
@@ -129,8 +151,22 @@ body {
 .valoracion-form button:hover {
   background-color: #0056b3;
 }
-/* VALORACION */
 
+.valoracion-form button:last-of-type:hover {
+  color: #fafafa;
+}
+
+.promedio-wrapper {
+  position: absolute;
+  top: 10px;  
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  padding: 8px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* VALORACION */
 
 
 /* Formulario de comentarios */
@@ -193,6 +229,133 @@ body {
   height: 50px;
 }
 
+.comentarios-panel {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  background: #fff;
+  border-left: 1px solid #ddd;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  overflow: scroll;
+}
+
+.comentarios-panel h3{
+  margin-bottom: 20px;
+}
+
+/* Ancho de la barra */
+.comentarios-panel::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+/* Fondo de la barra */
+.comentarios-panel::-webkit-scrollbar-track {
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* El "pulgar" que se arrastra */
+.comentarios-panel::-webkit-scrollbar-thumb {
+  background: #fafafab2;
+  border-radius: 8px;
+}
+
+/* Al hacer hover */
+.comentarios-panel::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
+}
+
+.comentarios-box {
+  display: flex;
+  border: 3px solid #0056b3; 
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 8px;
+  background-color: #fafafa;
+  list-style: none;
+}
+
+.comentarios-box p {
+  color: #666;
+  font-size: 0.8em;
+}
+
+.comentarios-box p:last-of-type {
+  color: #666;
+  font-size: 0.7em;
+}
+
+.comentarios-box strong {
+  color: #0056b3;
+}
+
+.cargar-mas {
+  width: 100%;
+  padding: 12px 18px;
+  border: 3px solid #0056b3; 
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cargar-mas p:first-of-type {
+  color: #071324;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.cargar-mas p:last-of-type {
+  color: #666;
+}
+
+/* .cargar-mas:hover {
+  background-color: #071324;
+} */
+
+.cerrar-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0056b3;
+  color: #fafafa;
+  border: none;
+  stroke: currentColor;
+  stroke-width: 1px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.comentarios-box button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0056b3;
+  border: none;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  background: none;
+}
+
+/* arreglar */
+.cerrar-panel:hover {
+  background-color: #071324;
+}
+
 /* Formulario de comentarios */
 
 /* Botones carrusel */
@@ -236,5 +399,4 @@ body {
   margin-right: 6px;
   font-size: 0.76em;
 }
-
 
