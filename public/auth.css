@@ -20,18 +20,64 @@ body {
 
 .container {
   background-color: #fff;
-  padding: 20px;
+  padding: 10px 30px 10px 30px;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: min(400px, 90%);
+  width: min(450px, 100%);
 }
 
-
-.form-group {
+.form-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  width: 100%;
+  align-items: center;
+  padding: 25px 0px 10px 0px;
+}
+
+.form-wrapper p {
+  color: #666;
+}
+
+.form-wrapper h1 {
+  color: #4455cc;
+}
+
+.form-wrapper svg {
+  color: #4455cc;
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input {
+  padding-left: 45px;   /* espacio para el candado */
+  padding-right: 20px;  /* espacio para el botón */
+  border: 1px solid #a3a3a3;
+  border-radius: 8px;
+}
+
+.form-group .bi-lock {
+  position: absolute;
+  left: 18px;
+  top: 61%;
+  fill: gray;
+  pointer-events: none;
+}
+
+.form-group button {
+  position: absolute;
+  right: 10px;
+  top: 61%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.form-group button svg {
+  fill: #4455cc;
 }
 
 .center{
@@ -43,58 +89,61 @@ body {
 .redirect-link{
   font-size: 0.9rem;
   text-align: center;
-  margin-top: 20px;
+  list-style: none;
+  margin-bottom: 10px;
 }
 
-
+.redirect-link a {
+  text-decoration: none;
+  color: #4455cc;
+}
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   max-width: 500px;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 form label {
+  color: #000000;
+  margin: 10px 0px 5px 0px;
+  font-size: 12px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
 }
 
 form input,
 form textarea,
 form select {
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
 }
 
 form input:focus,
 form textarea:focus,
 form select:focus {
   outline: none;
-  border-color: #2556f7;
+  border-color: #4455cc;
   box-shadow: 0 0 5px rgba(37, 86, 247, 0.3);
 }
 
-form button {
-  padding: 10px 20px;
-  background-color: #071324;
-  width: min(150px, 100%);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.form-submit {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0px 5px 0px;
 }
 
-form button:hover {
-  background-color: #1a3fa0;
+.form-submit button {
+  padding: 10px;
+  border: 3px solid #4455cc; 
+  border-radius: 8px;
+  color: #4455cc;
+  cursor: pointer;
+}
+
+.form-submit button:hover {
+  background-color: #4455cc;
+  color: #fafafa;
 }
 
 /* ALERTAS */
@@ -123,3 +172,6 @@ form button:hover {
   background-color: white;
   box-shadow: 0 0 10px rgba(175, 76, 76, 0.5);
 }
+
+
+/* SIGN UP */

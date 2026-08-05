@@ -21,7 +21,7 @@ body {
 nav {
   display: flex;
   align-items: center;
-  background-color: #007bff;
+  background-color: #4455cc;
   width: 98%;
   height: 60px;
   border-radius: 15px;
@@ -60,57 +60,9 @@ nav ul li.nav-user .nav-user-profile {
 }
 
 nav ul li a:hover {
-    color: #007bff;
+    color: #4455cc;
 } 
-/*
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 20px 0;
-}
 
-.form-publicacion {
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #f9f9f9;
-  font-family: Arial, sans-serif;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.form-control {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.btn-submit {
-  background: #071324;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.btn-submit:hover {
-  background: #0056b3;
-}
-*/
 .errores {
   color: red;
   font-size: 0.9em;
@@ -142,7 +94,7 @@ li.nav-search input[type="text"] {
 }
 
 li.nav-search input[type="text"]:focus {
-  border-color: #007bff; /* color al hacer foco */
+  border-color: #4455cc; /* color al hacer foco */
 }
 
 /* Botón con el ícono */
@@ -161,5 +113,5 @@ li.nav-search button svg {
 }
 
 li.nav-search button:hover svg {
-  fill: #007bff;
+  fill: #4455cc;
 }
