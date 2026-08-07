@@ -3,6 +3,7 @@ extends ../layout.pug
 block metadata
   title Perfil
   link(rel='stylesheet', href='/perfil.css')
+  link(rel="stylesheet", href="/gallery.css")
 
 block content
   .perfil-container
@@ -15,13 +16,12 @@ block content
         form(action=`/seguir/${usuario.id_usuario}`, method="POST")
           button(type="submit") Seguir
 
-    .perfil-stats
-      .stat-box Seguidores #{usuario.Seguidores.length}
-      .stat-box Siguiendo #{usuario.Seguidos.length}
+      .perfil-stats
+        .stat-box Seguidores #{usuario.Seguidores.length}
+        .stat-box Siguiendo #{usuario.Seguidos.length}
 
   .perfil-publicaciones
-    h2 Publicaciones
     if usuario.Publicacions.length
-      include ../publicacion/gallery
+      include ../galleryPartial.pug
     else
       p.no-publicaciones No tiene publicaciones aún.
