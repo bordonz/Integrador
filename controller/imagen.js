@@ -35,3 +35,20 @@ export async function mostrarPublicacion(req, res) {
     res.status(500).send('Error al cargar la galería');
   }
 }
+
+export async function cerrarComentarios(req, res) {
+  try {
+    const imagen = await Imagen.findByPk(req.params.idImagen);
+    
+    if (!imagen) return res.status(404).send('Imagen no encontrada');
+
+    imagen.estado = Boolean(!imagen.estado);
+    console.log('ESTADO DE LOS COMENTARIOS',imagen.estado)
+    await imagen.save();
+
+    res.redirect('/galeria')
+  } catch (error) {
+    console.error('[!] Error al alternar comentarios:', error);
+    res.status(500).send('Error al actualizar estado de comentarios');
+  }
+}

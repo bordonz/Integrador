@@ -43,17 +43,48 @@ main.gallery-container
                         svg(xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi-star" viewBox="0 0 16 16")
                           path(d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z")
                         | Valorar
-                      button.ver-comentarios(type="button")
-                        svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16")
-                          path(d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z")
-                          path(d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0")
+                    button.ver-comentarios(type="button")
+                      svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16")
+                        path(d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z")
+                        path(d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0")
+                    if currentUser && currentUser.id_usuario === publicacion.id_usuario
+                      form(action=`/cerrarComentarios/${imagen.id}`, method="POST")
+                        button.cerrar-comentarios(type="submit")
+                          svg(xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-x-icon lucide-message-square-x")
+                            path(d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z")
+                            path(d="m14.5 8.5-5 5")
+                            path(d="m9.5 8.5 5 5")
+                    button.ver-reporte(type="button")
+                      svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16")
+                        path(d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z")
+                        path(d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z")
+                    aside.reporte-panel(data-img-id=imagen.id style="display:none")
+                      button.cerrar-panel(type="button")
+                        svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16")
+                          path(d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708")
+                      form(action=`RUTA${imagen.id}`, method="POST")
+                        select(name="valor")
+                            option(value="1") Bullyng o contacto no deseado
+                            option(value="2") Suicidio, autolesión o trastornos
+                            option(value="3") Violencia, odio o explotación
+                            option(value="4") Venta o promoción de artículos restringidos
+                            option(value="5") Desnudos o actividad sexual
+                            option(value="6") Estafa, fraude o spam
+                            option(value="7") Información falsa
+                            option(value="8") Propiedad intelectual
+                        label(for="descripcion")
+                          textarea(name="descripcion" placeholder="Descripcion del reporte..." rows="4")
+                        button(type="submit") 
+                          svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16")
+                            path(d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z")
+                          h3 reportar
                   form.comentario-form(data-publicacion-idx=idx, action=`/publicacion/crearComentario/${imagen.id}`, method="POST")
                     div.input-wrapper
                       svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16")
                         path(d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z")
                         path(d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0")
                       input(type="text", name="descripcion", placeholder="Escribir comentario...")
-                    button(type="submit") 
+                    button.btn-comentar(type="submit", data-estado=(imagen.estado === true ? 'true' : 'false')) 
                       svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16")
                         path(d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z")
 
@@ -120,12 +151,7 @@ main.gallery-container
           
           if (prevBtn) prevBtn.addEventListener('click', prevSlide);
           if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-          
-          // Opcional: Auto-play cada 5 segundos
-          // setInterval(nextSlide, 5000);
         });
-        
-        console.log('Carruseles inicializados:', document.querySelectorAll('.gallery-item').length);
       });
 
     script.
@@ -142,15 +168,6 @@ main.gallery-container
         });
       });
 
-    //-script.
-      document.addEventListener('DOMContentLoaded', () => {
-        const panel = document.querySelector('.comentarios-panel');
-        const btnCerrar = document.querySelector('.cerrar-panel');
-
-        btnCerrar.addEventListener('click', () => {
-          panel.style.display = 'none';
-        });
-      });  
     script.
       document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.comentarios-panel').forEach(panel => {
@@ -160,3 +177,48 @@ main.gallery-container
           });
         });
       });
+
+    //panel de reporte
+    script.
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.ver-reporte').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const panel = btn.closest('.gallery-item').querySelector('.reporte-panel');
+            if (panel.style.display === 'none') {
+              panel.style.display = 'block';
+            } else {
+              panel.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+    script.
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.reporte-panel').forEach(panel => {
+          const btnCerrar = panel.querySelector('.cerrar-panel');
+          btnCerrar.addEventListener('click', () => {
+            panel.style.display = 'none';
+          });
+        });
+      });
+
+    //Cerrar comentarios
+    script.
+      document.addEventListener('DOMContentLoaded', () => {
+        const btnsComentar = document.querySelectorAll('.btn-comentar');
+
+        btnsComentar.forEach(btnComentar => {
+          const estado = btnComentar.dataset.estado === 'true';
+          console.log('Valor de data-estado:', btnComentar.dataset.estado);
+          console.log('Estado convertido a boolean:', estado);
+          if(estado) {  // ← Cambiar btnComentar por estado
+            btnComentar.disabled = false;
+            btnComentar.style.backgroundColor = '#4455cc';
+          } else {
+            btnComentar.disabled = true;
+            btnComentar.style.backgroundColor = '#dc3545';
+          }
+        });
+      });
+

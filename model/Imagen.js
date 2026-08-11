@@ -23,6 +23,10 @@ Imagen.init(
             type: DataTypes.BLOB("long"), // binario de la imagen
             allowNull: false,
         },
+        estado: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
         metadata: {
             type: DataTypes.STRING, // ej: "image/png", "image/jpeg"
             allowNull: false,

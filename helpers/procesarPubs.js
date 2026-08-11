@@ -55,8 +55,10 @@ export async function procesarPublicaciones(publicaciones) {
                         src: sufix + imgsBase64,
                         descripcion: imagen.descripcion || '',
                         comentarios: comentarios,
-                        promedio: imagen.dataValues.promedio || null
+                        promedio: imagen.dataValues.promedio || null,
+                        estado: imagen.estado
                     });
+                    //console.log('Primera publicación:', JSON.stringify(imagenesProcesadas[0].estado, null, 2));
                 } else {
                     console.log(`    Imagen inválida:`, imagen);
                 }
@@ -75,7 +77,7 @@ export async function procesarPublicaciones(publicaciones) {
             });
         }
         
-        console.log('Primera publicación:', JSON.stringify(publicacionesProcesadas[0], null, 2));
+        //console.log('Primera publicación:', JSON.stringify(publicacionesProcesadas[0], null, 2));
 
         return publicacionesProcesadas;
         

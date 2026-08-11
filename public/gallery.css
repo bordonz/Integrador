@@ -108,6 +108,14 @@ body {
   margin: 17px 0px 17px 0px;
 }
 
+.valoracion-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 17px 0px 17px 0px;
+}
+
 .valoracion-form select {
   padding: 6px 13px;
   border-radius: 4px;
@@ -127,7 +135,7 @@ body {
   justify-content: center;
 }
 
-.valoracion-form button:last-of-type {
+.valoracion-wrapper button {
   width: 65px;
   height: 35px;
   stroke-width: 2px;
@@ -142,17 +150,24 @@ body {
   cursor: pointer;
 }
 
+.ver-comentarios button {
+  background-color: #4455cc;
+  color: #fafafa;
+}
+
 .bi-star {
   width: 15px;
   height: 15px;
   margin-right: 8px;
 }
 
-.valoracion-form button:hover {
-  background-color: #0056b3;
+.valoracion-wrapper button:hover {
+  background-color: #071324;
+  border: #071324;
+  color: #fafafa;
 }
 
-.valoracion-form button:last-of-type:hover {
+.valoracion-wrapper button:last-of-type:hover {
   color: #fafafa;
 }
 
@@ -400,3 +415,49 @@ body {
   font-size: 0.76em;
 }
 
+.reporte-panel {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  background: #fafafa;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 9;
+}
+
+.reporte-panel .cerrar-panel{
+  color: #fafafa;
+  margin-bottom: 20px;
+}
+
+.reporte-panel form{
+  width: 550px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reporte-panel form select{
+  padding: 6px 13px;
+  border-radius: 8px;
+  border: 1px solid #666;
+}
+
+.reporte-panel form textarea{
+  width: 400px;
+  height: 105px;
+  border: 1px solid #666;
+  margin: 20px;
+  border-radius: 8px;
+  padding: 6px 13px;
+}
+
+.reporte-panel form button {
+  width: 150px;
+  height: 40px;
+  gap: 10px;
+}
