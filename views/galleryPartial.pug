@@ -62,16 +62,17 @@ main.gallery-container
                       button.cerrar-panel(type="button")
                         svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16")
                           path(d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708")
-                      form(action=`RUTA${imagen.id}`, method="POST")
+                      form(action='/denunciarImagen', method="POST")
+                        input(type="hidden", name="idImagen", value=imagen.id)
                         select(name="valor")
-                            option(value="1") Bullyng o contacto no deseado
-                            option(value="2") Suicidio, autolesión o trastornos
-                            option(value="3") Violencia, odio o explotación
-                            option(value="4") Venta o promoción de artículos restringidos
-                            option(value="5") Desnudos o actividad sexual
-                            option(value="6") Estafa, fraude o spam
-                            option(value="7") Información falsa
-                            option(value="8") Propiedad intelectual
+                            option(value="Bullyng o contacto no deseado") Bullyng o contacto no deseado
+                            option(value="Suicidio, autolesión o trastornos") Suicidio, autolesión o trastornos
+                            option(value="Violencia, odio o explotación") Violencia, odio o explotación
+                            option(value="Venta o promoción de artículos restringidos") Venta o promoción de artículos restringidos
+                            option(value="Desnudos o actividad sexual") Desnudos o actividad sexual
+                            option(value="Estafa, fraude o spam") Estafa, fraude o spam
+                            option(value="Información falsa") Información falsa
+                            option(value="Propiedad intelectual") Propiedad intelectual
                         label(for="descripcion")
                           textarea(name="descripcion" placeholder="Descripcion del reporte..." rows="4")
                         button(type="submit") 

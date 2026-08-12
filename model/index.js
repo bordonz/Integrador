@@ -34,12 +34,13 @@ Comentario.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // denuncia y comentario/publicacion (1:n)
 Comentario.hasMany(Denuncia, {foreignKey: 'id_comentario'});
-/* Denuncia.belongsTo(Comentario, { foreignKey: 'id_comentario' }); */
 Denuncia.belongsTo(Comentario, { foreignKey: { name: 'id_comentario', allowNull: true } });
 
-Publicacion.hasMany(Denuncia, {foreignKey: 'id_publicacion'});
-/* Denuncia.belongsTo(Publicacion, { foreignKey: 'id_publicacion' }); */
-Denuncia.belongsTo(Publicacion, { foreignKey: { name: 'id_publicacion', allowNull: true } });
+Imagen.hasMany(Denuncia, {foreignKey: 'id_imagen'});
+Denuncia.belongsTo(Imagen, { foreignKey: { name: 'id_imagen', allowNull: true } });
+
+Usuario.hasMany(Denuncia, { foreignKey: 'id_usuario' });
+Denuncia.belongsTo(Usuario, { foreignKey: { name: 'id_usuario', allowNull: false } });
 
 //imagen y publicacion/valoracion (1:n)
 Publicacion.hasMany(Imagen, {foreignKey: 'id_publicacion'});

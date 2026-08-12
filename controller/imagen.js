@@ -6,6 +6,7 @@ import { Valoracion } from '../model/Valoracion.js';
 import { Etiqueta } from '../model/Etiqueta.js';
 import sequelize  from '../db/config.js';
 import { procesarPublicaciones } from '../helpers/procesarPubs.js';
+import { Denuncia } from '../model/Denuncia.js';
 
 export async function mostrarPublicacion(req, res) {
   try {
@@ -50,5 +51,24 @@ export async function cerrarComentarios(req, res) {
   } catch (error) {
     console.error('[!] Error al alternar comentarios:', error);
     res.status(500).send('Error al actualizar estado de comentarios');
+  }
+}
+
+export async function denunciarImagen(req, res) {
+  try {
+    const denuncia = {
+      estado: "pendiente",
+      titulo: req.body.valor,
+      descripcion: req.body.descripcion,
+      id_comentario: null,
+      id_imagen: req.body.idImagen,
+      id_usuario: req.session.usuario.id
+    };
+    
+    await Denuncia.crearDenuncia(denuncia);
+    res.redirect('/galeria');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al registrar la denuncia");
   }
 }

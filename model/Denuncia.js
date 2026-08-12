@@ -1,7 +1,11 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/config.js";
 
-export class Denuncia extends Model {}
+export class Denuncia extends Model {
+    static async crearDenuncia(atributos) {
+        return await Denuncia.create(atributos)
+    }
+}
 
 Denuncia.init(
     {
@@ -14,13 +18,14 @@ Denuncia.init(
         estado: {
             type: DataTypes.STRING(50),
             allowNull: false,
+            defaultValue: 'pendiente'
         },
         titulo: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(150),
             allowNull: false,
         },
         descripcion: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(150),
         },
     },
     {
