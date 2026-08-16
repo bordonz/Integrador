@@ -10,6 +10,7 @@ import valoracionRouter from './routes/valoracion.js';
 import authRouter from './routes/auth.js';
 import imagenRouter from './routes/imagen.js';
 import buscadorRouter from './routes/buscador.js';
+import denunciaRouter from './routes/denuncia.js';
 
 import { optionalAuth } from './middleware/authOpcional.js';
 import { crearNuevoUsuario } from './controller/usuario.js';
@@ -59,6 +60,8 @@ app.use('/seguir', seguirRouter);
 app.use('/', optionalAuth, imagenRouter);
 
 app.use('/buscar', buscadorRouter);
+
+app.use('/denuncia', denunciaRouter);
 
 // CONEXION A BD
 connectDatabase()
