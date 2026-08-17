@@ -9,6 +9,7 @@ import { Seguir } from "../model/Seguir.js";
 import sequelize from '../db/config.js';
 import { procesarPublicaciones } from "../helpers/procesarPubs.js";
 import { Guardado } from "../model/Guardado.js";
+import { Coleccion } from "../model/Coleccion.js";
 
 //TODO: Usar las alertas
 export async function crearNuevoUsuario(req, res) {
@@ -91,7 +92,7 @@ export async function cargarPerfil(req, res) {
              },
             {
             model: Publicacion,
-            attributes: ['id_publicacion', 'titulo', 'descripcion', 'estado'],
+            attributes: ['id_publicacion', 'titulo', 'descripcion', 'estado', 'createdAt'],
             include: [
                 {
                 model: Imagen,
@@ -104,7 +105,15 @@ export async function cargarPerfil(req, res) {
                 model: Etiqueta,
                 as: 'Etiquetas',
                 through: { attributes: [] }
-                }
+                },
+                {
+                    model: Guardado, 
+                    include: [Usuario, Coleccion]
+                },
+                {
+                model: Usuario,
+                attributes: ['id_usuario', 'firstName', 'lastName']
+                },
             ]
             }
         ]
@@ -114,13 +123,19 @@ export async function cargarPerfil(req, res) {
       return res.status(404).render('error', { message: 'Usuario no encontrado' });
     }
     const publicacionesProcesadas = await procesarPublicaciones(usuario.Publicacions);
-
+    let colecciones = [];
+    if (req.session.usuario) {
+        colecciones = await Coleccion.findAll({
+        where: { id_usuario: req.session.usuario.id },
+        attributes: ['id_coleccion', 'nombre']
+        });
+    }
     // Verificar si el logueado sigue al usuario
     const estaSeguido = await Seguir.findOne({
       where: { id_seguidor: idLogueado, id_seguido: userId }
     });
 
-    res.render('usuario/perfil', {usuario, publicaciones: publicacionesProcesadas, estaSeguido: !!estaSeguido});
+    res.render('usuario/perfil', {usuario, publicaciones: publicacionesProcesadas, estaSeguido: !!estaSeguido, colecciones : colecciones});
 
   } catch (error) {
     console.error('[!] Error cargando perfil:', error);

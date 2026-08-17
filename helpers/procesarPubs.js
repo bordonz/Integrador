@@ -81,8 +81,6 @@ export async function procesarPublicaciones(publicaciones) {
                 guardados: guardados
             });
         }
-        
-        //console.log('Primera publicación:', JSON.stringify(publicacionesProcesadas[0], null, 2));
 
         return publicacionesProcesadas;
         

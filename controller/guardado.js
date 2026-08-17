@@ -43,8 +43,15 @@ export async function mostrarGuardados(req, res) {
 
         const publicaciones = guardados.map(g => g.Publicacion);
         const publicacionesProcesadas = await procesarPublicaciones(publicaciones);
-
-        res.render('usuario/guardado', { usuario: req.session.usuario, publicaciones: publicacionesProcesadas });
+        
+        let colecciones = [];
+        if (req.session.usuario) {
+            colecciones = await Coleccion.findAll({
+            where: { id_usuario: req.session.usuario.id },
+            attributes: ['id_coleccion', 'nombre']
+            });
+        }
+        res.render('usuario/guardado', { usuario: req.session.usuario, publicaciones: publicacionesProcesadas, colecciones : colecciones });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al cargar los guardados');
