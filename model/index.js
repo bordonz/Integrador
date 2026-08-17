@@ -7,6 +7,8 @@ import { Imagen } from "./Imagen.js";
 import { Valoracion } from "./Valoracion.js";
 import { Denuncia } from "./Denuncia.js";
 import { Seguir } from "./Seguir.js";
+import { Guardado } from "./Guardado.js";
+import { Coleccion } from "./Coleccion.js";
 
 let associationsInitialized = false;
 
@@ -58,6 +60,22 @@ Usuario.belongsToMany(Usuario, {as: 'Seguidos', through: Seguir, foreignKey: 'id
   otherKey: 'id_seguido'});
 Usuario.belongsToMany(Usuario, {as: 'Seguidores', through: Seguir, foreignKey: 'id_seguido',
   otherKey: 'id_seguidor'});
+
+// Guardado ↔ Usuario
+Usuario.hasMany(Guardado, { foreignKey: 'id_usuario' });
+Guardado.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+
+// Guardado ↔ Publicacion
+Publicacion.hasMany(Guardado, { foreignKey: 'id_publicacion' });
+Guardado.belongsTo(Publicacion, { foreignKey: 'id_publicacion' });
+
+// Guardado ↔ Coleccion
+Coleccion.hasMany(Guardado, { foreignKey: 'id_coleccion' });
+Guardado.belongsTo(Coleccion, { foreignKey: 'id_coleccion' });
+
+// Usuario ↔ Coleccion
+Usuario.hasMany(Coleccion, { foreignKey: 'id_usuario' });
+Coleccion.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 
 export async function connectDatabase() {

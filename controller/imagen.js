@@ -7,6 +7,8 @@ import { Etiqueta } from '../model/Etiqueta.js';
 import sequelize  from '../db/config.js';
 import { procesarPublicaciones } from '../helpers/procesarPubs.js';
 import { Denuncia } from '../model/Denuncia.js';
+import { Guardado } from '../model/Guardado.js';
+import { Coleccion } from '../model/Coleccion.js';
 
 export async function mostrarPublicacion(req, res) {
   try {
@@ -27,12 +29,24 @@ export async function mostrarPublicacion(req, res) {
         {
           model: Usuario,
           attributes: ['id_usuario', 'firstName', 'lastName']
+        },
+        {
+          model: Guardado, 
+          include: [Usuario, Coleccion]
         }
       ]
     });
     const publicacionesProcesadas = await procesarPublicaciones(publicaciones);
-    res.render('publicacion/gallery', { publicaciones: publicacionesProcesadas });
+    let colecciones = [];
+    if (req.session.usuario) {
+      colecciones = await Coleccion.findAll({
+        where: { id_usuario: req.session.usuario.id },
+        attributes: ['id_coleccion', 'nombre']
+      });
+    }
+    res.render('publicacion/gallery', { publicaciones: publicacionesProcesadas, colecciones: colecciones });
   } catch (error) {
+    console.log(error)
     res.status(500).send('Error al cargar la galería');
   }
 }

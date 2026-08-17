@@ -5,6 +5,7 @@ import { Usuario } from '../model/Usuario.js';
 import { Valoracion } from '../model/Valoracion.js';
 import { Etiqueta } from '../model/Etiqueta.js';
 import sequelize  from '../db/config.js';
+import { Coleccion } from '../model/Coleccion.js';
 
 export async function procesarPublicaciones(publicaciones) {
     try {
@@ -29,10 +30,13 @@ export async function procesarPublicaciones(publicaciones) {
         const publicacionesProcesadas = [];
         
         for(const pub of publicaciones) {
+            const guardados = (pub.Guardados || []).map(g => ({
+                id_guardado: g.id_guardado,
+                id_usuario: g.Usuario ? g.Usuario.id_usuario : null,
+                coleccion: g.Coleccion ? g.Coleccion.nombre : null
+            }));
+
             const imagenesProcesadas = [];
-            
-            console.log(`Publicación ${pub.id_publicacion}: ${pub.titulo}`);
-            console.log(`  Número de imágenes: ${pub.Imagens?.length || 0}`);
             
             const imagenes = pub.Imagens || [];
             
@@ -73,7 +77,8 @@ export async function procesarPublicaciones(publicaciones) {
                 etiquetas: (pub.Etiquetas || []).map(e => e.etiqueta),
                 id_usuario: pub.Usuario ? pub.Usuario.id_usuario : null,
                 autor: pub.Usuario ? `${pub.Usuario.firstName} ${pub.Usuario.lastName}` : 'Desconocido',
-                fecha: pub.createdAt ? pub.createdAt.toLocaleDateString() : ''
+                fecha: pub.createdAt ? pub.createdAt.toLocaleDateString() : '',
+                guardados: guardados
             });
         }
         

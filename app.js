@@ -11,6 +11,7 @@ import authRouter from './routes/auth.js';
 import imagenRouter from './routes/imagen.js';
 import buscadorRouter from './routes/buscador.js';
 import denunciaRouter from './routes/denuncia.js';
+import guardadoRouter from './routes/guardado.js';
 
 import { optionalAuth } from './middleware/authOpcional.js';
 import { crearNuevoUsuario } from './controller/usuario.js';
@@ -62,6 +63,8 @@ app.use('/', optionalAuth, imagenRouter);
 app.use('/buscar', buscadorRouter);
 
 app.use('/denuncia', denunciaRouter);
+
+app.use('/guardados', guardadoRouter);
 
 // CONEXION A BD
 connectDatabase()

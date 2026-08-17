@@ -8,6 +8,7 @@ import { Etiqueta } from '../model/Etiqueta.js';
 import { Seguir } from "../model/Seguir.js";
 import sequelize from '../db/config.js';
 import { procesarPublicaciones } from "../helpers/procesarPubs.js";
+import { Guardado } from "../model/Guardado.js";
 
 //TODO: Usar las alertas
 export async function crearNuevoUsuario(req, res) {
@@ -85,6 +86,9 @@ export async function cargarPerfil(req, res) {
         include: [
             { model: Usuario, as: 'Seguidores' },
             { model: Usuario, as: 'Seguidos' },
+            { model: Guardado,
+                include: [ Publicacion ]
+             },
             {
             model: Publicacion,
             attributes: ['id_publicacion', 'titulo', 'descripcion', 'estado'],
