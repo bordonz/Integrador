@@ -47,6 +47,35 @@
   font-weight: bold;
 }
 
-.perfil-publicaciones {
+/* .perfil-publicaciones {
   width: 90%;
+} */
+
+.form-coleccion {
+  display: flex;
+  align-items: center;
+}
+
+.form-coleccion input {
+  margin: 0px 20px;
+  width: 299px;
+  height: 35px;
+  padding: 5px;
+  border: 1px solid #a3a3a3;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #333;
+}
+
+.form-coleccion button {
+  padding: 9px 18px;
+  background: #4455cc;
+  border: none;
+  border-radius: 9px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.form-coleccion button:hover {
+  background: #071324;
 }
